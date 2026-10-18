@@ -91,7 +91,8 @@ export function ChatView({ conversationId }: { conversationId: string }) {
   };
 
   const compare = conversation.compare;
-  const otherModel = settings.recentModels.find((k) => k !== modelKey && visibleModels.some((m) => m.key === k)) ?? visibleModels.find((m) => m.key !== modelKey)?.key;
+  const chatCapable = visibleModels.filter((m) => m.chatSupported);
+  const otherModel = settings.recentModels.find((k) => k !== modelKey && chatCapable.some((m) => m.key === k)) ?? chatCapable.find((m) => m.key !== modelKey)?.key;
 
   return (
     <div className="flex h-full min-h-0 flex-col">

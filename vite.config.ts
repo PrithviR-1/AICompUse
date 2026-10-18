@@ -25,6 +25,9 @@ export default defineConfig({
     hmr: host ? { protocol: "ws", host, port: 1421 } : undefined,
     watch: { ignored: ["**/src-tauri/**", "**/crates/**", "**/target/**"] },
   },
+  // Shiki's languages are imported lazily; pre-bundling them made Vite re-optimize mid-session
+  // and answer stale chunks with "504 Outdated Optimize Dep". Shiki is pure ESM, so skip it.
+  optimizeDeps: { exclude: ["shiki"] },
   build: {
     target: "es2022",
     chunkSizeWarningLimit: 1500,

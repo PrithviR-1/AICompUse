@@ -42,12 +42,27 @@ describe("router", () => {
 });
 
 describe("format", () => {
-  it("labels prices per §15.8", () => {
-    expect(priceLabel({ free: false, inputPrice: 0.1, outputPrice: 0.2 })).toBe("In $0.10 · Out $0.20 per 1M");
-    expect(priceLabel({ free: false, inputPrice: null, outputPrice: 0.2 })).toBe("Price unknown");
-    expect(priceLabel({ free: true, inputPrice: 0, outputPrice: 0 })).toBe("Free");
-    expect(priceLabel({ free: false, inputPrice: 0.05, outputPrice: 0.4 })).toBe("In $0.05 · Out $0.40 per 1M");
-    expect(priceHint({ free: false, inputPrice: null, outputPrice: null })).toBe("n/a");
+  it("labels prices per §15.8: Free only when both prices are zero, otherwise Price unknown", () => {
+    const tok = (inputPrice: number | null, outputPrice: number | null, free = false) => ({
+      free,
+      inputPrice,
+      outputPrice,
+      pricing: "perToken" as const,
+      perCallPrice: null,
+    });
+    expect(priceLabel(tok(0.1, 0.2))).toBe("In $0.10 · Out $0.20 per 1M");
+    expect(priceLabel(tok(null, 0.2))).toBe("Price unknown");
+    expect(priceLabel(tok(null, null))).toBe("Price unknown");
+    expect(priceLabel(tok(0, 0, true))).toBe("Free");
+    expect(priceLabel(tok(0, null))).toBe("Price unknown");
+    expect(priceLabel(tok(10, 50))).toBe("In $10 · Out $50 per 1M");
+    expect(priceLabel(tok(0.05, 0.4))).toBe("In $0.05 · Out $0.40 per 1M");
+    expect(priceHint(tok(1.25, 10))).toBe("$1.25 / $10");
+    expect(priceHint(tok(null, null))).toBe("Price unknown");
+    expect(priceHint(tok(0, 0, true))).toBe("Free");
+    const call = { free: false, inputPrice: null, outputPrice: null, pricing: "perCall" as const, perCallPrice: 0.3 };
+    expect(priceLabel(call)).toBe("Per call $0.30");
+    expect(priceHint(call)).toBe("$0.30 per call");
   });
 
   it("labels context, cost and duration", () => {

@@ -17,6 +17,8 @@ import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ShortcutList } from "@/components/shell/ShortcutsDialog";
 import type { FontSize, ProviderStatus, Theme } from "@/lib/bindings";
+import { priceHint } from "@/lib/format";
+import { KIND_LABELS, sortModels } from "@/lib/modelSort";
 import { navigate, type SettingsSection } from "@/lib/router";
 import { cn } from "@/lib/utils";
 import { useApp } from "@/stores/app";
@@ -271,13 +273,13 @@ function ModelsSection() {
               }}
             >
               {!refreshing && <Icon icon={RefreshCw} size="sm" />}
-              Refresh
+              Refresh models
             </Button>
           }
         />
         <CardBody className="gap-1">
           {refreshError && <p className="pb-2 text-meta text-danger-text">{refreshError.message}</p>}
-          {models.map((m) => {
+          {sortModels(models).map((m) => {
             const hidden = settings.hiddenModels.includes(m.key);
             const fav = favorites.includes(m.key);
             return (
@@ -285,7 +287,10 @@ function ModelsSection() {
                 <ModelAvatar name={m.name} vendor={m.vendor} />
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-label text-fg">{m.name}</p>
-                  <p className="truncate text-caption text-faint">{m.id}</p>
+                  <p className="truncate text-caption text-faint tabular-nums">
+                    {m.kind === "chat" ? "" : `${KIND_LABELS[m.kind]} · `}
+                    {priceHint(m)} · {m.id}
+                  </p>
                 </div>
                 <IconButton
                   label={fav ? "Remove from favorites" : "Add to favorites"}

@@ -207,25 +207,45 @@ export type ModelInfo = {
 	id: string,
 	provider: ProviderId,
 	name: string,
-	/**  Company that makes the model; drives avatar color and picker grouping. */
+	/**  Company that makes the model; drives avatar color and grouping. */
 	vendor: string,
+	kind: ModelKind,
+	inputModalities: string[],
+	outputModalities: string[],
 	contextWindow: number | null,
+	maxOutput: number | null,
+	pricing: PricingUnit,
 	/**  USD per 1M input tokens; `None` = unknown. */
 	inputPrice: number | null,
 	/**  USD per 1M output tokens; `None` = unknown. */
 	outputPrice: number | null,
-	/**  Confirmed zero-priced. */
+	/**  USD per 1M cached input tokens (cache read); `None` = not listed. */
+	cachedInputPrice: number | null,
+	/**  USD per request for per-call models. */
+	perCallPrice: number | null,
+	/**  Price depends on prompt length; the standard tier is shown. */
+	tieredPricing: boolean,
+	/**  Both token prices are confirmed zero. */
 	free: boolean,
 	caps: ModelCaps,
-	/**  Lower = more prominent on the home Models row. */
-	rank: number | null,
-	/**  True when metadata comes from `config/models.toml`. */
-	seeded: boolean,
+	/**  A current flagship model (config/models.toml `[frontier]`). */
+	frontier: boolean,
+	/**  Endpoint types the provider reports (`openai`, `anthropic`, `gemini`, …). */
+	endpointTypes: string[],
+	/**  Can be used in a chat in this build. */
+	chatSupported: boolean,
+	/**  Why it can't be chatted with, when `chat_supported` is false. */
+	unavailableReason: string | null,
+	/**  True when catalogue metadata exists for this ID. */
+	hasMetadata: boolean,
 	/**  First reported by the provider since the previous app launch. */
 	isNew: boolean,
 	/**  Structured output or tool calling: required to run agent steps later (§6). */
 	agentEligible: boolean,
 };
+
+/**  What a model produces; only `Chat` models can be used in a conversation. */
+export type ModelKind = "chat" | "image" | "video" | "audio" | "embedding" | "rerank" | "transcription" | "other";
 
 /**  The merged model list plus freshness information for the UI. */
 export type ModelList = {
@@ -256,6 +276,8 @@ export type PlatformInfo = {
 	/**  CPU architecture as reported by Rust (`x86_64`, `aarch64`, …). */
 	arch: string,
 };
+
+export type PricingUnit = "perToken" | "perCall";
 
 /**  A provider endpoint. Mixroute is primary and the only one required. */
 export type ProviderId = "mixroute" | "openAi" | "anthropic" | "gemini" | "deepSeek" | "openRouter";

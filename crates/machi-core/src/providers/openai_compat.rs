@@ -342,7 +342,20 @@ fn parse_models(body: &Value) -> Result<Vec<RemoteModel>, ProviderError> {
                 .get("owned_by")
                 .and_then(Value::as_str)
                 .map(str::to_string);
-            Some(RemoteModel { id, owned_by })
+            let endpoint_types = m
+                .get("supported_endpoint_types")
+                .and_then(Value::as_array)
+                .map(|a| {
+                    a.iter()
+                        .filter_map(|e| e.as_str().map(str::to_string))
+                        .collect()
+                })
+                .unwrap_or_default();
+            Some(RemoteModel {
+                id,
+                owned_by,
+                endpoint_types,
+            })
         })
         .collect())
 }
@@ -624,7 +637,8 @@ mod tests {
             models[0],
             RemoteModel {
                 id: "gpt-4.1-nano".into(),
-                owned_by: Some("openai".into())
+                owned_by: Some("openai".into()),
+                endpoint_types: vec!["openai".into()]
             }
         );
         assert_eq!(server.requests()[0].method, "GET");

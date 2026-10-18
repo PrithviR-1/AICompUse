@@ -6,7 +6,8 @@ import { Check, Search } from "lucide-react";
 import { ModelAvatar } from "@/components/ui/avatar";
 import { Icon } from "@/components/ui/icon";
 import { Tooltip } from "@/components/ui/tooltip";
-import type { ModelInfo } from "@/lib/bindings";
+import type { ModelInfo, ModelKind } from "@/lib/bindings";
+import { KIND_LABELS, sortModels } from "@/lib/modelSort";
 import { contextLabel, priceHint } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { CapabilityIcons } from "./CapabilityIcons";
@@ -32,18 +33,20 @@ interface Group {
   models: ModelInfo[];
 }
 
+const NON_CHAT_ORDER: ModelKind[] = ["image", "video", "audio", "transcription", "embedding", "rerank", "other"];
+
+/** Favorites, then chat models in default order, then each non-chat type (§15 model list). */
 export function groupModels(models: ModelInfo[], favorites: string[]): Group[] {
+  const sorted = sortModels(models);
   const groups: Group[] = [];
-  const favs = favorites.map((k) => models.find((m) => m.key === k)).filter((m): m is ModelInfo => Boolean(m));
+  const favs = favorites.map((k) => sorted.find((m) => m.key === k)).filter((m): m is ModelInfo => Boolean(m));
   if (favs.length) groups.push({ heading: "Favorites", models: favs });
-  const free = models.filter((m) => m.free);
-  if (free.length) groups.push({ heading: "Free", models: free });
-  const byVendor = new Map<string, ModelInfo[]>();
-  for (const m of models) byVendor.set(m.vendor, [...(byVendor.get(m.vendor) ?? []), m]);
-  const vendors = [...byVendor.entries()].sort(
-    ([, a], [, b]) => Math.min(...a.map((m) => m.rank ?? 999)) - Math.min(...b.map((m) => m.rank ?? 999)),
-  );
-  for (const [vendor, list] of vendors) groups.push({ heading: vendor, models: list });
+  const chat = sorted.filter((m) => m.kind === "chat");
+  if (chat.length) groups.push({ heading: "Models", models: chat });
+  for (const kind of NON_CHAT_ORDER) {
+    const list = sorted.filter((m) => m.kind === kind);
+    if (list.length) groups.push({ heading: `${KIND_LABELS[kind]} models`, models: list });
+  }
   return groups;
 }
 
@@ -113,7 +116,7 @@ export function ModelPickerList({
             className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:pt-3 [&_[cmdk-group-heading]]:pb-1 [&_[cmdk-group-heading]]:text-caption [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-faint"
           >
             {group.models.map((model) => {
-              const reason = unavailableReason?.(model) ?? null;
+              const reason = model.chatSupported ? (unavailableReason?.(model) ?? null) : model.unavailableReason;
               return (
                 <Command.Item
                   key={`${group.heading}-${model.key}`}

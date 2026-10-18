@@ -15,6 +15,7 @@ import { Kbd } from "@/components/ui/kbd";
 import { Menu, MenuContent, MenuItem, MenuLabel, MenuSeparator, MenuTrigger } from "@/components/ui/menu";
 import { ModelAvatar, ProfileAvatar } from "@/components/ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { SelectMenu } from "@/components/ui/select-menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Slider } from "@/components/ui/slider";
 import { Spinner } from "@/components/ui/spinner";
@@ -217,6 +218,15 @@ function ThemePanel({ theme }: { theme: "dark" | "light" }) {
           </div>
           <Spinner className="text-muted" />
         </div>
+      </Section>
+
+      <Section title="SelectMenu (sort and filter control)">
+        <StateGrid
+          states={["default", "hover", "active", "focus", "disabled"]}
+          render={(s) => (
+            <SelectMenu label="Sort" value="priceDesc" onChange={() => undefined} options={[{ value: "priceDesc", label: "Price: high to low" }]} {...forceProps(s)} />
+          )}
+        />
       </Section>
 
       <Section title="Card and Skeleton (loading)">

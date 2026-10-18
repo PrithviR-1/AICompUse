@@ -113,11 +113,24 @@ describe("Markdown blocks", () => {
 });
 
 describe("ModelPickerList", () => {
-  it("groups favorites first, then vendors by rank", () => {
+  it("groups favorites, then chat models, then each non-chat type", () => {
     const groups = groupModels(MOCK_MODELS, ["mixroute:kimi-k2.5"]);
-    expect(groups[0]).toMatchObject({ heading: "Favorites" });
-    expect(groups[1].heading).toBe("OpenAI");
-    expect(groups.some((g) => g.heading === "Free")).toBe(false);
+    expect(groups.map((g) => g.heading)).toEqual(["Favorites", "Models", "Image models", "Video models", "Transcription models", "Embedding models"]);
+    expect(groups[1].models[0].frontier).toBe(true);
+  });
+
+  it("shows every model from the /models fixture, with non-chat ones disabled", () => {
+    wrap(<ModelPickerList models={MOCK_MODELS} favorites={[]} onSelect={vi.fn()} />);
+    const options = screen.getAllByRole("option");
+    expect(options).toHaveLength(MOCK_MODELS.length);
+    for (const m of MOCK_MODELS) {
+      expect(screen.getAllByText(m.name).length).toBeGreaterThan(0);
+    }
+    const sora = options.find((o) => o.textContent?.includes("Sora 2"));
+    expect(sora).toHaveAttribute("aria-disabled", "true");
+    expect(sora).toHaveTextContent("Chat isn't supported for video models yet.");
+    const nano = options.find((o) => o.textContent?.startsWith("GGPT-4.1 nano"));
+    expect(nano).toHaveTextContent("$0.10 / $0.20");
   });
 
   it("filters by name and ID as you type and selects with Enter", async () => {
@@ -127,7 +140,7 @@ describe("ModelPickerList", () => {
     await user.type(screen.getByPlaceholderText("Search models"), "deepseek");
     const options = screen.getAllByRole("option");
     expect(options).toHaveLength(1);
-    expect(options[0]).toHaveTextContent("DeepSeek V4 Flash");
+    expect(options[0]).toHaveTextContent(/DeepSeek/);
     await user.keyboard("{Enter}");
     expect(onSelect).toHaveBeenCalledWith("mixroute:deepseek-v4-flash");
   });

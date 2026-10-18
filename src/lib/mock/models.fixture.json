@@ -1,0 +1,1404 @@
+[
+  {
+    "key": "mixroute:claude-fable-5-1",
+    "id": "claude-fable-5-1",
+    "provider": "mixroute",
+    "name": "Claude Fable 5.1",
+    "vendor": "Anthropic",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 1000000,
+    "maxOutput": 128000,
+    "pricing": "perToken",
+    "inputPrice": 10.0,
+    "outputPrice": 50.0,
+    "cachedInputPrice": 0.25,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": true,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": true,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:gpt-6-astra",
+    "id": "gpt-6-astra",
+    "provider": "mixroute",
+    "name": "GPT-6 Astra",
+    "vendor": "OpenAI",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 1050000,
+    "maxOutput": 128000,
+    "pricing": "perToken",
+    "inputPrice": 10.0,
+    "outputPrice": 50.0,
+    "cachedInputPrice": 1.0,
+    "perCallPrice": null,
+    "tieredPricing": true,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": true,
+      "reasoning": true,
+      "fileInput": false
+    },
+    "frontier": true,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:claude-opus-5-5",
+    "id": "claude-opus-5-5",
+    "provider": "mixroute",
+    "name": "Claude Opus 5.5",
+    "vendor": "Anthropic",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 1000000,
+    "maxOutput": 128000,
+    "pricing": "perToken",
+    "inputPrice": 4.0,
+    "outputPrice": 20.0,
+    "cachedInputPrice": 0.2,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": true,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": true,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:kimi-k3",
+    "id": "kimi-k3",
+    "provider": "mixroute",
+    "name": "Kimi K3",
+    "vendor": "Moonshot",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image",
+      "video"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 1048576,
+    "maxOutput": 1048576,
+    "pricing": "perToken",
+    "inputPrice": 3.0,
+    "outputPrice": 15.0,
+    "cachedInputPrice": 0.3,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": true,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": true,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:gemini-4-argon",
+    "id": "gemini-4-argon",
+    "provider": "mixroute",
+    "name": "Gemini 4 Argon",
+    "vendor": "Google",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image",
+      "file",
+      "audio",
+      "video"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 1048576,
+    "maxOutput": 65536,
+    "pricing": "perToken",
+    "inputPrice": 2.0,
+    "outputPrice": 10.0,
+    "cachedInputPrice": 0.1,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": true,
+      "reasoning": false,
+      "fileInput": true
+    },
+    "frontier": true,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": true,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:gpt-6-sol",
+    "id": "gpt-6-sol",
+    "provider": "mixroute",
+    "name": "GPT-6 Sol",
+    "vendor": "OpenAI",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 1050000,
+    "maxOutput": 128000,
+    "pricing": "perToken",
+    "inputPrice": 2.0,
+    "outputPrice": 10.0,
+    "cachedInputPrice": 0.2,
+    "perCallPrice": null,
+    "tieredPricing": true,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": true,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": true,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:grok-4.7",
+    "id": "grok-4.7",
+    "provider": "mixroute",
+    "name": "Grok 4.7",
+    "vendor": "xAI",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 500000,
+    "maxOutput": 450000,
+    "pricing": "perToken",
+    "inputPrice": 2.0,
+    "outputPrice": 6.0,
+    "cachedInputPrice": 0.5,
+    "perCallPrice": null,
+    "tieredPricing": true,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": true,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": true,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:gemini-2.5-flash-image",
+    "id": "gemini-2.5-flash-image",
+    "provider": "mixroute",
+    "name": "Gemini 2.5 Flash image (Nano Banana)",
+    "vendor": "Google",
+    "kind": "image",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text",
+      "image"
+    ],
+    "contextWindow": 65536,
+    "maxOutput": 32768,
+    "pricing": "perToken",
+    "inputPrice": 0.3,
+    "outputPrice": 30.0,
+    "cachedInputPrice": null,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": false,
+      "structuredOutput": false,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": false,
+    "unavailableReason": "Chat isn't supported for image models yet.",
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": false
+  },
+  {
+    "key": "mixroute:gpt-4o-2024-08-06",
+    "id": "gpt-4o-2024-08-06",
+    "provider": "mixroute",
+    "name": "GPT-4o 20240806",
+    "vendor": "OpenAI",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 128000,
+    "maxOutput": 16384,
+    "pricing": "perToken",
+    "inputPrice": 2.5,
+    "outputPrice": 10.0,
+    "cachedInputPrice": 1.25,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": false,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:gpt-4o-2024-11-20",
+    "id": "gpt-4o-2024-11-20",
+    "provider": "mixroute",
+    "name": "GPT-4o 20241120",
+    "vendor": "OpenAI",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 128000,
+    "maxOutput": 16384,
+    "pricing": "perToken",
+    "inputPrice": 2.5,
+    "outputPrice": 10.0,
+    "cachedInputPrice": 1.25,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": false,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:gpt-5",
+    "id": "gpt-5",
+    "provider": "mixroute",
+    "name": "GPT-5",
+    "vendor": "OpenAI",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 400000,
+    "maxOutput": 128000,
+    "pricing": "perToken",
+    "inputPrice": 1.25,
+    "outputPrice": 10.0,
+    "cachedInputPrice": 0.125,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": false,
+      "reasoning": true,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:gpt-5-2025-08-07",
+    "id": "gpt-5-2025-08-07",
+    "provider": "mixroute",
+    "name": "GPT-5 20250807",
+    "vendor": "OpenAI",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 400000,
+    "maxOutput": 128000,
+    "pricing": "perToken",
+    "inputPrice": 1.25,
+    "outputPrice": 10.0,
+    "cachedInputPrice": 0.125,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": true,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:whisper-1",
+    "id": "whisper-1",
+    "provider": "mixroute",
+    "name": "whisper-1",
+    "vendor": "OpenAI",
+    "kind": "transcription",
+    "inputModalities": [
+      "audio"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": null,
+    "maxOutput": null,
+    "pricing": "perToken",
+    "inputPrice": 6.0,
+    "outputPrice": 6.0,
+    "cachedInputPrice": null,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": false,
+      "tools": false,
+      "structuredOutput": false,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": false,
+    "unavailableReason": "Chat isn't supported for transcription models yet.",
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": false
+  },
+  {
+    "key": "mixroute:gpt-4.1",
+    "id": "gpt-4.1",
+    "provider": "mixroute",
+    "name": "GPT-4.1",
+    "vendor": "OpenAI",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 1047576,
+    "maxOutput": 32768,
+    "pricing": "perToken",
+    "inputPrice": 2.0,
+    "outputPrice": 4.0,
+    "cachedInputPrice": 0.5,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": false,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:gpt-4.1-2025-04-14",
+    "id": "gpt-4.1-2025-04-14",
+    "provider": "mixroute",
+    "name": "GPT-4.1 20250414",
+    "vendor": "OpenAI",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 1047576,
+    "maxOutput": 32768,
+    "pricing": "perToken",
+    "inputPrice": 2.0,
+    "outputPrice": 4.0,
+    "cachedInputPrice": null,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": true,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:kimi-k2.5",
+    "id": "kimi-k2.5",
+    "provider": "mixroute",
+    "name": "Kimi K2.5",
+    "vendor": "Moonshot",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 262144,
+    "maxOutput": 262144,
+    "pricing": "perToken",
+    "inputPrice": 0.6,
+    "outputPrice": 3.0,
+    "cachedInputPrice": 0.1,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": true,
+      "reasoning": true,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:gemini-2.5-flash",
+    "id": "gemini-2.5-flash",
+    "provider": "mixroute",
+    "name": "Gemini 2.5 Flash",
+    "vendor": "Google",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image",
+      "audio",
+      "video"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 1048576,
+    "maxOutput": 65536,
+    "pricing": "perToken",
+    "inputPrice": 0.3,
+    "outputPrice": 2.5,
+    "cachedInputPrice": null,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": true,
+      "reasoning": true,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:gpt-5-mini",
+    "id": "gpt-5-mini",
+    "provider": "mixroute",
+    "name": "GPT-5 Mini",
+    "vendor": "OpenAI",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 400000,
+    "maxOutput": 128000,
+    "pricing": "perToken",
+    "inputPrice": 0.25,
+    "outputPrice": 2.0,
+    "cachedInputPrice": 0.025,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": false,
+      "reasoning": true,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:gpt-5-mini-2025-08-07",
+    "id": "gpt-5-mini-2025-08-07",
+    "provider": "mixroute",
+    "name": "GPT-5 Mini 20250807",
+    "vendor": "OpenAI",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 400000,
+    "maxOutput": 128000,
+    "pricing": "perToken",
+    "inputPrice": 0.25,
+    "outputPrice": 2.0,
+    "cachedInputPrice": 0.025,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": true,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:qwen3.6-flash",
+    "id": "qwen3.6-flash",
+    "provider": "mixroute",
+    "name": "qwen3.6-flash",
+    "vendor": "Alibaba",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image",
+      "video"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 1000000,
+    "maxOutput": 65536,
+    "pricing": "perToken",
+    "inputPrice": 0.25,
+    "outputPrice": 1.5,
+    "cachedInputPrice": 0.025,
+    "perCallPrice": null,
+    "tieredPricing": true,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": true,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:gemini-3.5-flash-lite",
+    "id": "gemini-3.5-flash-lite",
+    "provider": "mixroute",
+    "name": "Gemini 3.5 Flash-Lite",
+    "vendor": "Google",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image",
+      "file",
+      "audio",
+      "video"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 1048576,
+    "maxOutput": 65536,
+    "pricing": "perToken",
+    "inputPrice": 0.3,
+    "outputPrice": 1.2,
+    "cachedInputPrice": 0.03,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": true,
+      "reasoning": false,
+      "fileInput": true
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:MiniMax-M2.5",
+    "id": "MiniMax-M2.5",
+    "provider": "mixroute",
+    "name": "MiniMax-M2.5",
+    "vendor": "Minimax",
+    "kind": "chat",
+    "inputModalities": [
+      "text"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 204800,
+    "maxOutput": 32768,
+    "pricing": "perToken",
+    "inputPrice": 0.3,
+    "outputPrice": 1.2,
+    "cachedInputPrice": 0.06,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": false,
+      "tools": true,
+      "structuredOutput": true,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:gpt-4.1-mini",
+    "id": "gpt-4.1-mini",
+    "provider": "mixroute",
+    "name": "GPT-4.1 Mini",
+    "vendor": "OpenAI",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 1047576,
+    "maxOutput": 32768,
+    "pricing": "perToken",
+    "inputPrice": 0.4,
+    "outputPrice": 0.8,
+    "cachedInputPrice": 0.1,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": false,
+      "tools": true,
+      "structuredOutput": false,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:gpt-4.1-mini-2025-04-14",
+    "id": "gpt-4.1-mini-2025-04-14",
+    "provider": "mixroute",
+    "name": "GPT-4.1 Mini 20250414",
+    "vendor": "OpenAI",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 1047576,
+    "maxOutput": 32768,
+    "pricing": "perToken",
+    "inputPrice": 0.4,
+    "outputPrice": 0.8,
+    "cachedInputPrice": null,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": true,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:gpt-4o-mini",
+    "id": "gpt-4o-mini",
+    "provider": "mixroute",
+    "name": "GPT-4o Mini",
+    "vendor": "OpenAI",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 128000,
+    "maxOutput": 16384,
+    "pricing": "perToken",
+    "inputPrice": 0.15,
+    "outputPrice": 0.6,
+    "cachedInputPrice": 0.075,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": false,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:gpt-4o-mini-2024-07-18",
+    "id": "gpt-4o-mini-2024-07-18",
+    "provider": "mixroute",
+    "name": "GPT-4o Mini 20240718",
+    "vendor": "OpenAI",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 128000,
+    "maxOutput": 16384,
+    "pricing": "perToken",
+    "inputPrice": 0.15,
+    "outputPrice": 0.6,
+    "cachedInputPrice": 0.075,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": true,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:gpt-5-nano",
+    "id": "gpt-5-nano",
+    "provider": "mixroute",
+    "name": "GPT-5 nano",
+    "vendor": "OpenAI",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 400000,
+    "maxOutput": 128000,
+    "pricing": "perToken",
+    "inputPrice": 0.05,
+    "outputPrice": 0.4,
+    "cachedInputPrice": 0.005,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": false,
+      "tools": true,
+      "structuredOutput": false,
+      "reasoning": true,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:gpt-5-nano-2025-08-07",
+    "id": "gpt-5-nano-2025-08-07",
+    "provider": "mixroute",
+    "name": "GPT-5 nano 20250807",
+    "vendor": "OpenAI",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 400000,
+    "maxOutput": 128000,
+    "pricing": "perToken",
+    "inputPrice": 0.05,
+    "outputPrice": 0.4,
+    "cachedInputPrice": 0.005,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": true,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:deepseek-v4-flash",
+    "id": "deepseek-v4-flash",
+    "provider": "mixroute",
+    "name": "DeepSeek-V4-Flash-0731",
+    "vendor": "DeepSeek",
+    "kind": "chat",
+    "inputModalities": [
+      "text"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 1000000,
+    "maxOutput": 384000,
+    "pricing": "perToken",
+    "inputPrice": 0.14,
+    "outputPrice": 0.28,
+    "cachedInputPrice": 0.0028,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": false,
+      "tools": true,
+      "structuredOutput": true,
+      "reasoning": true,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:gpt-4.1-nano",
+    "id": "gpt-4.1-nano",
+    "provider": "mixroute",
+    "name": "GPT-4.1 nano",
+    "vendor": "OpenAI",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 1047576,
+    "maxOutput": 32768,
+    "pricing": "perToken",
+    "inputPrice": 0.1,
+    "outputPrice": 0.2,
+    "cachedInputPrice": 0.025,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": false,
+      "tools": true,
+      "structuredOutput": false,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:gpt-4.1-nano-2025-04-14",
+    "id": "gpt-4.1-nano-2025-04-14",
+    "provider": "mixroute",
+    "name": "GPT-4.1 nano 20250414",
+    "vendor": "OpenAI",
+    "kind": "chat",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 1047576,
+    "maxOutput": 32768,
+    "pricing": "perToken",
+    "inputPrice": 0.1,
+    "outputPrice": 0.2,
+    "cachedInputPrice": null,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": true,
+      "structuredOutput": true,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  },
+  {
+    "key": "mixroute:text-embedding-3-small",
+    "id": "text-embedding-3-small",
+    "provider": "mixroute",
+    "name": "text-embedding-3-small",
+    "vendor": "OpenAI",
+    "kind": "embedding",
+    "inputModalities": [
+      "text"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 8191,
+    "maxOutput": null,
+    "pricing": "perToken",
+    "inputPrice": 0.02,
+    "outputPrice": 0.02,
+    "cachedInputPrice": null,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": false,
+      "tools": false,
+      "structuredOutput": false,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": false,
+    "unavailableReason": "Chat isn't supported for embedding models yet.",
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": false
+  },
+  {
+    "key": "mixroute:brand-new-model-x",
+    "id": "brand-new-model-x",
+    "provider": "mixroute",
+    "name": "brand-new-model-x",
+    "vendor": "Mixroute",
+    "kind": "chat",
+    "inputModalities": [],
+    "outputModalities": [],
+    "contextWindow": null,
+    "maxOutput": null,
+    "pricing": "perToken",
+    "inputPrice": null,
+    "outputPrice": null,
+    "cachedInputPrice": null,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": false,
+      "tools": false,
+      "structuredOutput": false,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": false,
+    "isNew": false,
+    "agentEligible": false
+  },
+  {
+    "key": "mixroute:sora-2",
+    "id": "sora-2",
+    "provider": "mixroute",
+    "name": "Sora 2",
+    "vendor": "OpenAI",
+    "kind": "video",
+    "inputModalities": [
+      "text",
+      "image"
+    ],
+    "outputModalities": [
+      "video",
+      "audio"
+    ],
+    "contextWindow": null,
+    "maxOutput": null,
+    "pricing": "perCall",
+    "inputPrice": null,
+    "outputPrice": null,
+    "cachedInputPrice": null,
+    "perCallPrice": 0.3,
+    "tieredPricing": false,
+    "free": false,
+    "caps": {
+      "vision": true,
+      "tools": false,
+      "structuredOutput": false,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": false,
+    "unavailableReason": "Chat isn't supported for video models yet.",
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": false
+  },
+  {
+    "key": "mixroute:glm-4-flash",
+    "id": "glm-4-flash",
+    "provider": "mixroute",
+    "name": "GLM-4-FLASH",
+    "vendor": "GLM",
+    "kind": "chat",
+    "inputModalities": [
+      "text"
+    ],
+    "outputModalities": [
+      "text"
+    ],
+    "contextWindow": 128000,
+    "maxOutput": 4095,
+    "pricing": "perToken",
+    "inputPrice": 0.0,
+    "outputPrice": 0.0,
+    "cachedInputPrice": null,
+    "perCallPrice": null,
+    "tieredPricing": false,
+    "free": true,
+    "caps": {
+      "vision": false,
+      "tools": true,
+      "structuredOutput": true,
+      "reasoning": false,
+      "fileInput": false
+    },
+    "frontier": false,
+    "endpointTypes": [
+      "openai"
+    ],
+    "chatSupported": true,
+    "unavailableReason": null,
+    "hasMetadata": true,
+    "isNew": false,
+    "agentEligible": true
+  }
+]

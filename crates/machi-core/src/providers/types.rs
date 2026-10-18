@@ -89,4 +89,6 @@ pub struct StreamOutcome {
 pub struct RemoteModel {
     pub id: String,
     pub owned_by: Option<String>,
+    /// `supported_endpoint_types` (e.g. `["openai"]`, `["gemini","openai"]`); may be empty.
+    pub endpoint_types: Vec<String>,
 }

@@ -39,9 +39,9 @@ test("switching models mid-chat from the header", async ({ page }) => {
   await page.getByRole("button", { name: /Model: GPT-4.1 nano/ }).click();
   await page.getByPlaceholder("Search models").fill("deepseek");
   await page.keyboard.press("Enter");
-  await expect(page.getByRole("button", { name: /Model: DeepSeek V4 Flash/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Model: DeepSeek/ })).toBeVisible();
   await send(page, "Follow-up", 2);
-  await expect(page.locator("article").last()).toContainText("DeepSeek V4 Flash");
+  await expect(page.locator("article").last()).toContainText("DeepSeek");
 });
 
 test("editing a message creates a branch", async ({ page }) => {

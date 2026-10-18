@@ -9,6 +9,8 @@ import { IconButton } from "@/components/ui/icon-button";
 import { Composer } from "@/components/composer/Composer";
 import { Wordmark } from "@/components/shell/MachiMark";
 import type { ModelInfo } from "@/lib/bindings";
+import { priceHint } from "@/lib/format";
+import { chatModels } from "@/lib/modelSort";
 import { navigate } from "@/lib/router";
 import { useNewChatModelKey } from "@/hooks/useModelSelection";
 import { useApp } from "@/stores/app";
@@ -23,8 +25,17 @@ const MAX_TILES = 12;
 
 function ModelChip({ model, modelKey, selected, onClick, models }: { model?: ModelInfo; modelKey: string; selected: boolean; onClick: () => void; models: ModelInfo[] }) {
   const label = model ?? modelLabel(models, modelKey);
+  const price = model ? priceHint(model) : "Price unknown";
   return (
-    <Chip size="lg" selected={selected} onClick={onClick} title={label.name} leading={<ModelAvatar name={label.name} vendor={label.vendor} />} className="max-w-56">
+    <Chip
+      size="lg"
+      selected={selected}
+      onClick={onClick}
+      title={`${label.name} · ${price}`}
+      leading={<ModelAvatar name={label.name} vendor={label.vendor} />}
+      trailing={<span className="text-meta text-faint tabular-nums">{price}</span>}
+      className="max-w-80"
+    >
       {label.name}
     </Chip>
   );
@@ -46,12 +57,9 @@ export function HomeView() {
 
   const visible = useMemo(() => models.filter((m) => !settings.hiddenModels.includes(m.key)), [models, settings.hiddenModels]);
   const selected = visible.find((m) => m.key === selectedKey) ?? models.find((m) => m.key === selectedKey);
-  const recent = settings.recentModels.filter((k) => k !== selectedKey && visible.some((m) => m.key === k)).slice(0, 2);
-  const tiles = useMemo(() => {
-    const favs = settings.favorites.map((k) => visible.find((m) => m.key === k)).filter((m): m is ModelInfo => Boolean(m));
-    const rest = visible.filter((m) => !settings.favorites.includes(m.key));
-    return [...favs, ...rest].slice(0, MAX_TILES);
-  }, [visible, settings.favorites]);
+  const recent = settings.recentModels.filter((k) => k !== selectedKey && visible.some((m) => m.key === k && m.chatSupported)).slice(0, 2);
+  // Favorites, then the default order (frontier first, by price); chat models only.
+  const tiles = useMemo(() => chatModels(visible, settings.favorites).slice(0, MAX_TILES), [visible, settings.favorites]);
   const compare = newChat.compare;
   const mixrouteHint = providers.find((p) => p.provider === "mixroute")?.keyHint ?? "Create a key in the Mixroute dashboard at mixroute.ai.";
 

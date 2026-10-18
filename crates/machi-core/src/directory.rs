@@ -104,8 +104,7 @@ impl ModelDirectory {
 
     async fn refresh(&self, provider: ProviderId, now: Millis) -> Result<(), ProviderError> {
         let remote = self.factory.provider(provider)?.list_models().await?;
-        let pairs: Vec<_> = remote.into_iter().map(|m| (m.id, m.owned_by)).collect();
-        if let Err(err) = self.store.store_model_ids(provider, &pairs, now) {
+        if let Err(err) = self.store.store_model_ids(provider, &remote, now) {
             tracing::warn!(error = %err, "could not cache model list");
         }
         Ok(())
@@ -119,7 +118,7 @@ impl ModelDirectory {
             .read()
             .ok()
             .and_then(|list| list.iter().find(|m| m.key == key).cloned());
-        from_latest.or_else(|| self.catalog.seeded(key))
+        from_latest.or_else(|| self.catalog.lookup(key))
     }
 }
 

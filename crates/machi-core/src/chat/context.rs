@@ -241,8 +241,8 @@ mod tests {
             },
         ];
         let catalog = Catalog::embedded().unwrap();
-        let vision = catalog.seeded("mixroute:gpt-4.1").unwrap();
-        let blind = catalog.seeded("mixroute:gpt-4.1-nano").unwrap();
+        let vision = catalog.lookup("mixroute:gpt-4.1").unwrap();
+        let blind = catalog.lookup("mixroute:gpt-4.1-nano").unwrap();
         let path = [&message];
 
         let built = build_messages(&path, &ChatSettings::default(), Some(&vision));

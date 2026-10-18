@@ -7,11 +7,12 @@ import { useComposer } from "@/stores/composer";
 import { useConversation } from "@/stores/conversation";
 import { useModels } from "@/stores/models";
 
-/** First candidate that is a known model; before models load, the first candidate. */
+/** First candidate that is a known chat model; before models load, the first candidate. */
 function resolve(candidates: Array<string | null | undefined>, models: ModelInfo[]): string {
   const keys = candidates.filter((k): k is string => Boolean(k));
   if (models.length === 0) return keys[0] ?? "";
-  return keys.find((k) => models.some((m) => m.key === k)) ?? models[0]?.key ?? keys[0] ?? "";
+  const usable = models.filter((m) => m.chatSupported);
+  return keys.find((k) => usable.some((m) => m.key === k)) ?? usable[0]?.key ?? keys[0] ?? "";
 }
 
 /** Model for a chat that hasn't started: chip choice, then last used, then the default. */

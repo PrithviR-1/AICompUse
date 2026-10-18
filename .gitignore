@@ -16,3 +16,6 @@ test-results/
 
 # OS
 .DS_Store
+
+# Local caches
+.cache/

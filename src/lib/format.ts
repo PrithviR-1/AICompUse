@@ -4,20 +4,25 @@ import type { ModelInfo } from "./bindings";
 const usd = (n: number) => {
   if (n === 0) return "$0";
   if (n < 0.01) return `$${n.toFixed(3)}`;
-  return `$${n.toFixed(2)}`;
+  if (n >= 100) return `$${n.toFixed(0)}`;
+  return `$${n.toFixed(2).replace(/\.00$/, "")}`;
 };
 
-/** "In $0.10 · Out $0.20 per 1M", "Free" or "Price unknown" (§15.8). */
-export function priceLabel(model: Pick<ModelInfo, "free" | "inputPrice" | "outputPrice">): string {
+type Priced = Pick<ModelInfo, "free" | "inputPrice" | "outputPrice" | "pricing" | "perCallPrice">;
+
+/** "In $0.10 · Out $0.20 per 1M", "Per call $0.30", "Free" or "Price unknown" (§15.8). */
+export function priceLabel(model: Priced): string {
   if (model.free) return "Free";
+  if (model.pricing === "perCall") return model.perCallPrice != null ? `Per call ${usd(model.perCallPrice)}` : "Price unknown";
   if (model.inputPrice == null || model.outputPrice == null) return "Price unknown";
   return `In ${usd(model.inputPrice)} · Out ${usd(model.outputPrice)} per 1M`;
 }
 
-/** Compact hint for picker rows: "Free", "$0.30 / $2.50" or "n/a" (§11.4). */
-export function priceHint(model: Pick<ModelInfo, "free" | "inputPrice" | "outputPrice">): string {
+/** Compact price for picker rows and chips: "$1.25 / $10", "$0.30 per call", "Free" or "Price unknown". */
+export function priceHint(model: Priced): string {
   if (model.free) return "Free";
-  if (model.inputPrice == null || model.outputPrice == null) return "n/a";
+  if (model.pricing === "perCall") return model.perCallPrice != null ? `${usd(model.perCallPrice)} per call` : "Price unknown";
+  if (model.inputPrice == null || model.outputPrice == null) return "Price unknown";
   return `${usd(model.inputPrice)} / ${usd(model.outputPrice)}`;
 }
 

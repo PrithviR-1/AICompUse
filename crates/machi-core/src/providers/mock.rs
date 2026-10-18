@@ -90,6 +90,7 @@ impl ScriptedProvider {
             .map(|id| RemoteModel {
                 id: id.to_string(),
                 owned_by: Some("openai".into()),
+                endpoint_types: vec!["openai".into()],
             })
             .collect());
         self

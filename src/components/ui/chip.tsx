@@ -7,11 +7,13 @@ import { disabledStyle, focusRing, transition } from "./styles";
 interface ChipProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   selected?: boolean;
   leading?: ReactNode;
+  /** Secondary text after the label (e.g. a model's price). */
+  trailing?: ReactNode;
   size?: "md" | "lg";
 }
 
 export const Chip = forwardRef<HTMLButtonElement, ChipProps>(function Chip(
-  { selected = false, leading, size = "md", className, children, type = "button", ...props },
+  { selected = false, leading, trailing, size = "md", className, children, type = "button", ...props },
   ref,
 ) {
   return (
@@ -34,6 +36,7 @@ export const Chip = forwardRef<HTMLButtonElement, ChipProps>(function Chip(
     >
       {leading}
       <span className="truncate">{children}</span>
+      {trailing && <span className="shrink-0">{trailing}</span>}
     </button>
   );
 });

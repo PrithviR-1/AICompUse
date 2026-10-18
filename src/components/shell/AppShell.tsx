@@ -253,6 +253,6 @@ export function AppShell(): ReactNode {
 /** A second model for compare: the most recent other model, else the next in the catalog. */
 function pickOther(current: string): string {
   const { settings } = useApp.getState();
-  const models = useModels.getState().models.filter((m) => !settings.hiddenModels.includes(m.key));
+  const models = useModels.getState().models.filter((m) => m.chatSupported && !settings.hiddenModels.includes(m.key));
   return settings.recentModels.find((k) => k !== current && models.some((m) => m.key === k)) ?? models.find((m) => m.key !== current)?.key ?? current;
 }

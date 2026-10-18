@@ -4,6 +4,7 @@ use rusqlite::{OptionalExtension, params};
 
 use super::{Store, StoreResult, to_json};
 use crate::providers::ProviderId;
+use crate::providers::types::RemoteModel;
 use crate::types::{AppSettings, Millis};
 
 const APP_SETTINGS_KEY: &str = "app";
@@ -14,6 +15,7 @@ const LAST_LAUNCH_KEY: &str = "last_launch_at";
 pub struct CachedModel {
     pub id: String,
     pub owned_by: Option<String>,
+    pub endpoint_types: Vec<String>,
     pub first_seen_at: Millis,
 }
 
@@ -87,20 +89,27 @@ impl Store {
     pub fn store_model_ids(
         &self,
         provider: ProviderId,
-        models: &[(String, Option<String>)],
+        models: &[RemoteModel],
         now: Millis,
     ) -> StoreResult<()> {
         let mut conn = self.conn()?;
         let tx = conn.transaction()?;
         {
             let mut upsert = tx.prepare(
-                "INSERT INTO model_cache (provider, id, owned_by, first_seen_at, last_seen_at)
-                 VALUES (?1, ?2, ?3, ?4, ?4)
+                "INSERT INTO model_cache (provider, id, owned_by, endpoint_types, first_seen_at, last_seen_at)
+                 VALUES (?1, ?2, ?3, ?4, ?5, ?5)
                  ON CONFLICT(provider, id) DO UPDATE SET owned_by = excluded.owned_by,
+                     endpoint_types = excluded.endpoint_types,
                      last_seen_at = excluded.last_seen_at",
             )?;
-            for (id, owned_by) in models {
-                upsert.execute(params![provider.slug(), id, owned_by, now])?;
+            for m in models {
+                upsert.execute(params![
+                    provider.slug(),
+                    m.id,
+                    m.owned_by,
+                    to_json(&m.endpoint_types)?,
+                    now
+                ])?;
             }
         }
         // IDs no longer reported are dropped so hidden models stay hidden.
@@ -130,14 +139,16 @@ impl Store {
             return Ok(None);
         };
         let mut stmt = conn.prepare(
-            "SELECT id, owned_by, first_seen_at FROM model_cache WHERE provider = ?1 ORDER BY id",
+            "SELECT id, owned_by, endpoint_types, first_seen_at FROM model_cache WHERE provider = ?1 ORDER BY id",
         )?;
         let models = stmt
             .query_map([provider.slug()], |r| {
+                let endpoints: String = r.get(2)?;
                 Ok(CachedModel {
                     id: r.get(0)?,
                     owned_by: r.get(1)?,
-                    first_seen_at: r.get(2)?,
+                    endpoint_types: serde_json::from_str(&endpoints).unwrap_or_default(),
+                    first_seen_at: r.get(3)?,
                 })
             })?
             .collect::<Result<_, _>>()?;
@@ -204,20 +215,25 @@ mod tests {
     }
 
     #[test]
-    fn model_cache_keeps_first_seen_and_drops_vanished_ids() {
+    fn model_cache_keeps_first_seen_endpoints_and_drops_vanished_ids() {
+        let remote = |id: &str, endpoints: &[&str]| RemoteModel {
+            id: id.into(),
+            owned_by: Some("openai".into()),
+            endpoint_types: endpoints.iter().map(|e| e.to_string()).collect(),
+        };
         let store = Store::open_in_memory().unwrap();
         assert_eq!(store.cached_model_ids(ProviderId::Mixroute).unwrap(), None);
         store
             .store_model_ids(
                 ProviderId::Mixroute,
-                &[("a".into(), Some("openai".into())), ("b".into(), None)],
+                &[remote("a", &["openai"]), remote("b", &[])],
                 10,
             )
             .unwrap();
         store
             .store_model_ids(
                 ProviderId::Mixroute,
-                &[("b".into(), None), ("c".into(), None)],
+                &[remote("b", &["gemini", "openai"]), remote("c", &["openai"])],
                 20,
             )
             .unwrap();
@@ -232,6 +248,7 @@ mod tests {
             .map(|m| (m.id.as_str(), m.first_seen_at))
             .collect();
         assert_eq!(summary, [("b", 10), ("c", 20)]);
+        assert_eq!(cached.models[0].endpoint_types, ["gemini", "openai"]);
         assert_eq!(store.cached_model_ids(ProviderId::OpenAi).unwrap(), None);
     }
 

@@ -177,12 +177,35 @@ async fn send_streams_and_persists_a_complete_reply() {
 #[tokio::test]
 async fn unknown_price_leaves_cost_empty() {
     let h = harness();
+    // A model Mixroute might add later: no catalogue metadata, so no price.
     h.service
-        .send(send("Hi", NANO, None), h.sink.clone())
+        .send(
+            send("Hi", "mixroute:brand-new-model-x", None),
+            h.sink.clone(),
+        )
         .unwrap();
     let finished = h.sink.wait_finished(1).await;
     assert_eq!(finished[0].cost_usd, None);
     assert_eq!(finished[0].tokens_in, Some(10));
+}
+
+#[tokio::test]
+async fn non_chat_models_are_refused_with_a_reason() {
+    let h = harness();
+    match h.service.send(
+        send("Draw a cat", "mixroute:gemini-2.5-flash-image", None),
+        h.sink.clone(),
+    ) {
+        Err(CoreError::Invalid(msg)) => assert!(
+            msg.contains("Chat isn't supported for image models"),
+            "{msg}"
+        ),
+        other => panic!("expected a refusal, got {other:?}"),
+    }
+    assert!(
+        h.provider.requests().is_empty(),
+        "nothing was sent to the provider"
+    );
 }
 
 #[tokio::test]

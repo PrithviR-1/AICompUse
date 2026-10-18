@@ -1,0 +1,15 @@
+{"data":[
+ {"id":"gpt-4.1-nano","object":"model","created":1626777600,"owned_by":"openai","supported_endpoint_types":["openai"]},
+ {"id":"gpt-4.1-nano-2025-04-14","object":"model","created":1626777600,"owned_by":"openai","supported_endpoint_types":["openai"]},
+ {"id":"gpt-5","object":"model","created":1626777600,"owned_by":"openai","supported_endpoint_types":["openai"]},
+ {"id":"gpt-6-astra","object":"model","created":1626777600,"owned_by":"openai","supported_endpoint_types":["openai"]},
+ {"id":"claude-opus-5-5","object":"model","created":1626777600,"owned_by":"anthropic","supported_endpoint_types":["anthropic"]},
+ {"id":"gemini-2.5-flash","object":"model","created":1626777600,"owned_by":"vertex-ai","supported_endpoint_types":["gemini","openai"]},
+ {"id":"gemini-2.5-flash-image","object":"model","created":1626777600,"owned_by":"vertex-ai","supported_endpoint_types":["gemini","openai"]},
+ {"id":"kimi-k2.5","object":"model","created":1626777600,"owned_by":"openai","supported_endpoint_types":["openai"]},
+ {"id":"deepseek-v4-flash","object":"model","created":1626777600,"owned_by":"openai","supported_endpoint_types":["openai"]},
+ {"id":"text-embedding-3-small","object":"model","created":1626777600,"owned_by":"openai","supported_endpoint_types":["openai"]},
+ {"id":"sora-2","object":"model","created":1626777600,"owned_by":"openai","supported_endpoint_types":["openai"]},
+ {"id":"glm-4-flash","object":"model","created":1626777600,"owned_by":"openai","supported_endpoint_types":["openai"]},
+ {"id":"brand-new-model-x","object":"model","created":1626777600,"owned_by":"openai","supported_endpoint_types":["openai"]}
+],"object":"list","success":true}

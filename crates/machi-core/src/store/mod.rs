@@ -30,7 +30,10 @@ pub enum StoreError {
 pub type StoreResult<T> = Result<T, StoreError>;
 
 /// Ordered schema migrations; index + 1 is the resulting `user_version`.
-const MIGRATIONS: &[&str] = &[include_str!("migrations/0001_init.sql")];
+const MIGRATIONS: &[&str] = &[
+    include_str!("migrations/0001_init.sql"),
+    include_str!("migrations/0002_model_endpoints.sql"),
+];
 
 pub struct Store {
     conn: Mutex<Connection>,

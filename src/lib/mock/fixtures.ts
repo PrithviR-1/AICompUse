@@ -1,63 +1,13 @@
 // Fixtures for the mock backend (browser dev server, Vitest, Playwright). They mirror the
 // shape of real data; the desktop app always gets models from the Rust catalog instead.
-import type { ModelCaps, ModelInfo, ProviderId } from "../bindings";
+import type { ModelInfo } from "../bindings";
+import fixtureModels from "./models.fixture.json";
 
-const caps = (c: Partial<ModelCaps>): ModelCaps => ({
-  vision: false,
-  tools: false,
-  structuredOutput: false,
-  reasoning: false,
-  fileInput: false,
-  ...c,
-});
-
-function model(
-  id: string,
-  name: string,
-  vendor: string,
-  rank: number | null,
-  price: [number, number] | null,
-  context: number | null,
-  c: Partial<ModelCaps>,
-  extra: Partial<ModelInfo> = {},
-): ModelInfo {
-  const provider: ProviderId = "mixroute";
-  const modelCaps = caps(c);
-  return {
-    key: `${provider}:${id}`,
-    id,
-    provider,
-    name,
-    vendor,
-    contextWindow: context,
-    inputPrice: price ? price[0] : null,
-    outputPrice: price ? price[1] : null,
-    free: false,
-    caps: modelCaps,
-    rank,
-    seeded: true,
-    isNew: false,
-    agentEligible: modelCaps.tools || modelCaps.structuredOutput,
-    ...extra,
-  };
-}
-
-export const MOCK_MODELS: ModelInfo[] = [
-  model("gpt-4.1", "GPT-4.1", "OpenAI", 1, null, 1047576, { vision: true, tools: true }),
-  model("gemini-2.5-flash", "Gemini 2.5 Flash", "Google", 2, [0.3, 2.5], 1048576, { vision: true, tools: true, structuredOutput: true, reasoning: true }),
-  model("deepseek-v4-flash", "DeepSeek V4 Flash", "DeepSeek", 4, [0.14, 0.28], 1000000, { tools: true, reasoning: true }),
-  model("kimi-k2.5", "Kimi K2.5", "Moonshot", 5, [0.6, 3.0], 256000, { vision: true, tools: true, reasoning: true }),
-  model("qwen3.6-flash", "Qwen3.6 Flash", "Alibaba", 7, [0.25, 1.5], null, { vision: true, tools: true }),
-  model("gemini-3.5-flash-lite", "Gemini 3.5 Flash Lite", "Google", 8, [0.3, 1.2], 1000000, { vision: true, tools: true }, { isNew: true }),
-  model("MiniMax-M2.5", "MiniMax M2.5", "MiniMax", 9, [0.3, 1.2], null, { tools: true }),
-  model("gpt-4.1-mini", "GPT-4.1 mini", "OpenAI", 10, null, 1047576, { tools: true }),
-  model("gpt-4o-mini", "GPT-4o mini", "OpenAI", 11, null, 128000, { vision: true, tools: true }),
-  model("gpt-4.1-nano", "GPT-4.1 nano", "OpenAI", 12, null, 1047576, { tools: true }),
-  model("gpt-5-nano", "GPT-5 nano", "OpenAI", 13, [0.05, 0.4], 400000, { tools: true, reasoning: true }),
-  model("gpt-4o-2024-11-20", "GPT-4o (Nov 2024)", "OpenAI", 14, null, 128000, { vision: true, tools: true }),
-  model("gpt-5", "GPT-5", "OpenAI", 20, [1.25, 10], 400000, { tools: true, reasoning: true }),
-  model("gpt-5-mini", "GPT-5 mini", "OpenAI", 21, [0.25, 2], 400000, { tools: true, reasoning: true }),
-];
+/**
+ * Models for the mock backend, produced by the real Rust catalog merge
+ * (`cargo run -p machi-core --example export_model_fixture`), so they can't drift from the app.
+ */
+export const MOCK_MODELS = fixtureModels as ModelInfo[];
 
 export const MOCK_DEFAULT_MODEL = "mixroute:gpt-4.1-nano";
 

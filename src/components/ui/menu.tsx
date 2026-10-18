@@ -1,5 +1,6 @@
 // Menu primitive (Radix DropdownMenu) for "⋯" menus: icon + label items, danger items, separators.
 import { forwardRef, type ComponentPropsWithoutRef, type ElementRef, type ReactNode } from "react";
+import { Check } from "lucide-react";
 import { DropdownMenu } from "radix-ui";
 import { cn } from "@/lib/utils";
 import { popoverSurface } from "./popover";
@@ -52,6 +53,29 @@ export const MenuItem = forwardRef<ElementRef<typeof DropdownMenu.Item>, MenuIte
     </DropdownMenu.Item>
   );
 });
+
+export const MenuRadioGroup = DropdownMenu.RadioGroup;
+
+export const MenuRadioItem = forwardRef<ElementRef<typeof DropdownMenu.RadioItem>, ComponentPropsWithoutRef<typeof DropdownMenu.RadioItem>>(
+  function MenuRadioItem({ className, children, ...props }, ref) {
+    return (
+      <DropdownMenu.RadioItem
+        ref={ref}
+        className={cn(
+          "flex h-9 cursor-pointer select-none items-center gap-3 rounded-control pr-3 pl-8 text-label text-fg outline-none relative",
+          "data-[highlighted]:bg-hover data-[disabled]:pointer-events-none data-[disabled]:opacity-45",
+          className,
+        )}
+        {...props}
+      >
+        <DropdownMenu.ItemIndicator className="absolute left-3 inline-flex text-accent">
+          <Check aria-hidden className="icon-sm" strokeWidth={1.75} />
+        </DropdownMenu.ItemIndicator>
+        <span className="flex-1 truncate">{children}</span>
+      </DropdownMenu.RadioItem>
+    );
+  },
+);
 
 export function MenuSeparator() {
   return <DropdownMenu.Separator className="my-1 h-px bg-border" />;

@@ -161,14 +161,20 @@ impl ChatService {
         Ok(())
     }
 
+    /// A model that can be used for a chat reply, or a plain-language reason it can't.
     fn model(&self, key: &str) -> CoreResult<ModelInfo> {
-        if parse_model_key(key).is_none() {
-            return Err(CoreError::Invalid(format!("Unknown model `{key}`.")));
-        }
-        Ok(self
+        let model = self
             .directory
             .find(key)
-            .unwrap_or_else(|| unknown_model(key)))
+            .ok_or_else(|| CoreError::Invalid(format!("Unknown model `{key}`.")))?;
+        if !model.chat_supported {
+            let reason = model
+                .unavailable_reason
+                .clone()
+                .unwrap_or_else(|| "This model can't be used for chat yet.".into());
+            return Err(CoreError::Invalid(format!("{}: {reason}", model.name)));
+        }
+        Ok(model)
     }
 
     fn conversation(&self, id: &str) -> CoreResult<Conversation> {
@@ -806,27 +812,6 @@ impl ChatService {
                 title: new_title,
             }));
         }
-    }
-}
-
-fn unknown_model(key: &str) -> ModelInfo {
-    let (provider, id) =
-        parse_model_key(key).unwrap_or((crate::providers::ProviderId::Mixroute, key));
-    ModelInfo {
-        key: key.to_string(),
-        id: id.to_string(),
-        provider,
-        name: id.to_string(),
-        vendor: provider.display_name().to_string(),
-        context_window: None,
-        input_price: None,
-        output_price: None,
-        free: false,
-        caps: Default::default(),
-        rank: None,
-        seeded: false,
-        is_new: false,
-        agent_eligible: false,
     }
 }
 

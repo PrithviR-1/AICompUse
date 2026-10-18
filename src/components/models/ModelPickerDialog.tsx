@@ -76,7 +76,8 @@ export function ModelPickerDialog() {
   const canCompare = picker.kind === "new-chat" || picker.kind === "chat";
   const startCompare = () => {
     const current = picker.kind === "chat" ? chatKey : newChatKey;
-    const other = settings.recentModels.find((k) => k !== current && visible.some((m) => m.key === k)) ?? visible.find((m) => m.key !== current)?.key;
+    const usable = visible.filter((m) => m.chatSupported);
+    const other = settings.recentModels.find((k) => k !== current && usable.some((m) => m.key === k)) ?? usable.find((m) => m.key !== current)?.key;
     if (!other) return;
     startCompareWith([current, other], picker.kind === "chat" ? picker.conversationId : null);
     close();
