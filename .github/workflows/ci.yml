@@ -46,9 +46,13 @@ jobs:
       - name: Front-end tests
         run: pnpm test
 
+      # One command per step on the default shell (PowerShell on Windows, bash on macOS):
+      # Git Bash on Windows couldn't resolve the chained command (exit 127).
+      - name: Regenerate bindings
+        run: cargo run -q -p machi --example export_bindings
+
       - name: Generated bindings are up to date
-        shell: bash
-        run: pnpm bindings && git diff --exit-code src/lib/bindings.ts
+        run: git diff --exit-code src/lib/bindings.ts
 
       - name: cargo fmt
         run: cargo fmt --all --check
