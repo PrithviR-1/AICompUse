@@ -150,7 +150,7 @@ impl ReasoningEffort {
 
 /// Per-chat generation settings (the composer's sliders popover, §15.7).
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize, Type)]
-#[serde(rename_all = "camelCase", default)]
+#[serde(rename_all = "camelCase")]
 pub struct ChatSettings {
     pub system_prompt: Option<String>,
     pub temperature: Option<f32>,
@@ -271,7 +271,7 @@ pub enum FontSize {
 
 /// App-wide preferences, persisted as one JSON document (§11.9, §15.0 item 12).
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Type)]
-#[serde(rename_all = "camelCase", default)]
+#[serde(rename_all = "camelCase")]
 pub struct AppSettings {
     pub theme: Theme,
     pub font_size: FontSize,
@@ -309,6 +309,18 @@ impl Default for AppSettings {
 }
 
 impl AppSettings {
+    /// Parses stored settings, filling fields missing from older versions with defaults.
+    pub fn from_stored_json(text: &str) -> Result<Self, serde_json::Error> {
+        let mut merged = serde_json::to_value(AppSettings::default())?;
+        let stored: serde_json::Value = serde_json::from_str(text)?;
+        if let (Some(base), serde_json::Value::Object(over)) = (merged.as_object_mut(), stored) {
+            for (key, value) in over {
+                base.insert(key, value);
+            }
+        }
+        serde_json::from_value(merged)
+    }
+
     /// Moves a model to the front of the recent list (max 8 entries).
     pub fn note_recent(&mut self, model_key: &str) {
         self.recent_models.retain(|m| m != model_key);
@@ -366,8 +378,15 @@ mod tests {
     }
 
     #[test]
+    fn chat_settings_tolerate_missing_fields() {
+        let s: ChatSettings = serde_json::from_str("{}").unwrap();
+        assert_eq!(s, ChatSettings::default());
+    }
+
+    #[test]
     fn settings_tolerate_missing_fields() {
-        let s: AppSettings = serde_json::from_str(r#"{"theme":"dark"}"#).unwrap();
+        let s =
+            AppSettings::from_stored_json(r#"{"theme":"dark","unknownFutureField":1}"#).unwrap();
         assert_eq!(s.theme, Theme::Dark);
         assert_eq!(s.default_model, DEFAULT_CHAT_MODEL);
         assert!(s.auto_title);

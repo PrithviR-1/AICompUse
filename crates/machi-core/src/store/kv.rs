@@ -62,7 +62,7 @@ impl Store {
     pub fn load_app_settings(&self) -> StoreResult<AppSettings> {
         let raw = self.get_setting(APP_SETTINGS_KEY)?;
         Ok(match raw {
-            Some(text) => serde_json::from_str(&text).unwrap_or_else(|err| {
+            Some(text) => AppSettings::from_stored_json(&text).unwrap_or_else(|err| {
                 tracing::warn!(error = %err, "stored settings unreadable; using defaults");
                 AppSettings::default()
             }),

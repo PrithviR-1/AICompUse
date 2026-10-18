@@ -48,7 +48,7 @@ source "$HOME/.cargo/env" 2>/dev/null; export NVM_DIR="$HOME/.nvm"; [ -s "$NVM_D
 - [x] 4.3 `cargo run --example smoke` live smoke test; results recorded in DECISIONS.md
 - [x] 4.4 Optional direct-provider adapters behind the same trait
 - [x] 4.5 Chat service: context from the message tree, streaming persistence, stop, branching (edit/regenerate), compare, title generation, tests
-- [ ] 4.6 Tauri commands + events wired, bindings regenerated
+- [x] 4.6 Tauri commands + events wired, bindings regenerated
 
 ### 5. UI (design system first, §15.12)
 - [ ] 5.1 Tokens (§15.10) + primitives: Button, IconButton+tooltip, Input, Textarea, Chip, Avatar, Badge, Card, Popover, Menu, Dialog, Toast, Skeleton, Tooltip, Tabs
