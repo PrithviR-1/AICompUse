@@ -16,7 +16,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "bg-accent-fill text-accent-contrast hover:bg-accent-fill-hover",
+        // Strong neutral: the accent is reserved for selection, links, Send and "See all" (§15.0 item 5).
+        primary: "bg-fg text-bg hover:bg-fg/85",
         secondary: "border border-border bg-raised text-fg hover:bg-hover hover:border-border-strong active:bg-active",
         ghost: "text-muted hover:bg-hover hover:text-fg active:bg-active",
         danger: "bg-danger-strong text-danger-contrast hover:bg-danger",

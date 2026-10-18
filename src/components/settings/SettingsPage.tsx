@@ -425,7 +425,7 @@ export function SettingsPage({ section }: { section: SettingsSection }) {
   return (
     <div className="flex h-full min-h-0">
       <nav aria-label="Settings sections" className="flex w-56 shrink-0 flex-col gap-1 border-r border-border px-3 py-8">
-        <h1 className="px-3 pb-4 text-heading font-bold text-fg">Settings</h1>
+        <h1 className="px-3 pb-2 text-meta font-medium text-faint">Settings</h1>
         {SECTIONS.map((s) => (
           <button
             key={s.id}

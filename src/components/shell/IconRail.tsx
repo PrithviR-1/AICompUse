@@ -20,6 +20,7 @@ interface RailActions {
 }
 
 interface RailState {
+  newChatActive: boolean;
   chatsOpen: boolean;
   modelsActive: boolean;
   compareActive: boolean;
@@ -51,8 +52,11 @@ const railIcon = (icon: LucideIcon) => <Icon icon={icon} size="lg" />;
 
 export function IconRail({ actions, state }: { actions: RailActions; state: RailState }) {
   return (
-    <nav aria-label="Main" className="flex h-full w-(--rail-width) shrink-0 flex-col items-center border-r border-border bg-rail py-3">
-      <div className="flex flex-col items-center gap-2">
+    <nav
+      aria-label="Main"
+      className="flex h-full w-(--rail-width) shrink-0 flex-col items-center overflow-x-hidden overflow-y-auto border-r border-border bg-rail py-3 [scrollbar-width:none]"
+    >
+      <div className="flex shrink-0 flex-col items-center gap-2">
         <Tooltip content="Machi home" side="right">
           <button
             type="button"
@@ -63,7 +67,7 @@ export function IconRail({ actions, state }: { actions: RailActions; state: Rail
             <MachiMark />
           </button>
         </Tooltip>
-        <RailButton label="New chat" onClick={actions.onNewChat}>
+        <RailButton label="New chat" active={state.newChatActive} onClick={actions.onNewChat}>
           {railIcon(SquarePen)}
         </RailButton>
         <RailButton label="Search chats" onClick={actions.onSearch}>
@@ -80,7 +84,7 @@ export function IconRail({ actions, state }: { actions: RailActions; state: Rail
           {railIcon(Columns2)}
         </RailButton>
       </div>
-      <div className="mt-auto flex w-full flex-col items-center gap-2 border-t border-border pt-3">
+      <div className="mt-auto flex w-full shrink-0 flex-col items-center gap-2 border-t border-border pt-3">
         <RailButton label="Settings" active={state.settingsActive} onClick={actions.onSettings}>
           {railIcon(Settings)}
         </RailButton>

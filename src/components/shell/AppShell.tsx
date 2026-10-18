@@ -202,6 +202,7 @@ export function AppShell(): ReactNode {
           onProfile: () => navigate({ name: "settings", section: "providers" }),
         }}
         state={{
+          newChatActive: route.name === "home" && !newChatCompare,
           chatsOpen: showFlyout,
           modelsActive: route.name === "models",
           compareActive: route.name === "chat" ? Boolean(activeConversation?.compare) : route.name === "home" && Boolean(newChatCompare),

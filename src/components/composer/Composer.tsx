@@ -11,6 +11,7 @@ import { ModelPickerList } from "@/components/models/ModelPickerList";
 import type { ChatSettings, ModelInfo, NewAttachment } from "@/lib/bindings";
 import { fileToAttachment } from "@/lib/files";
 import { cn } from "@/lib/utils";
+import { useApp } from "@/stores/app";
 import { useComposer } from "@/stores/composer";
 import { toast } from "@/stores/toasts";
 import { ChatSettingsPopover } from "./ChatSettingsPopover";
@@ -112,14 +113,15 @@ export function Composer({
   const empty = text.trim() === "" && attachments.length === 0;
   const canSend = !empty && !imageBlocked && !sending && target !== undefined;
 
-  // Auto-grow between one and eight lines, then scroll.
+  // Auto-grow between one and eight lines, then scroll; re-measure when the text size changes.
+  const fontSize = useApp((s) => s.settings.fontSize);
   useLayoutEffect(() => {
     const el = textareaRef.current;
     if (!el) return;
     el.style.height = "auto";
     const lineHeight = parseFloat(getComputedStyle(el).lineHeight) || 24;
     el.style.height = `${Math.min(el.scrollHeight, lineHeight * MAX_LINES)}px`;
-  }, [text]);
+  }, [text, fontSize]);
 
   useEffect(() => {
     if (autoFocus) textareaRef.current?.focus();
@@ -265,7 +267,7 @@ export function Composer({
             onChange={(e) => onChange(e.target.value, e.target.selectionStart)}
             onKeyDown={onKeyDown}
             onPaste={onPaste}
-            className="w-full resize-none bg-transparent py-1 text-body text-fg outline-none placeholder:text-faint"
+            className="min-h-[calc(1lh+0.5rem)] w-full resize-none bg-transparent py-1 text-body text-fg outline-none placeholder:text-faint"
           />
           <div className="flex items-center gap-1">
             <input

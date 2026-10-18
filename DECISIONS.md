@@ -82,3 +82,8 @@ Judgment calls made while building, each with context, decision and consequence 
 - **Context:** with 12 GiB free at the start (B1), the debug `target/` reached 6.6 GB and the disk fell to 1.3 GiB free.
 - **Decision:** `[profile.dev] debug = "line-tables-only"` with `debug = false` for all dependencies, and the Tauri lib crate builds only `rlib` (the `staticlib`/`cdylib` crate types from the template exist for iOS/Android, which Machi doesn't target).
 - **Consequence:** `target/` is ≈ 1.4 GB; backtraces in dependencies lose line info in debug builds. Mobile targets would need the crate types back.
+
+## D15 — Accent and selection rules from the visual review
+- **Context:** §15.0 item 5 limits the accent to selected states, links, the Send button and "See all"; item 9 says the selected item gets an "accent-tinted" treatment, while §15.5 specifies `--surface-active` for the selected chip; §15.3 specifies the accent for the Machi mark and the profile circle.
+- **Decision:** primary buttons use a strong neutral fill (`--text` on `--bg`) instead of the accent. Send, links, "See all", focus rings (required by §15.11), switches and sliders in their on state, the Machi mark and the profile circle keep the accent. Selected chips, tabs and rail items use `--surface-active` as §15.5 and §15.3 specify.
+- **Consequence:** the accent marks only the primary send action, links and selection, so it stays meaningful; primary buttons are still the highest-contrast control in their card.

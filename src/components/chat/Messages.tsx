@@ -62,7 +62,7 @@ function BranchNav({ branch }: { branch: BranchInfo }) {
 function ErrorCard({ error, onRetry, onSwitchModel, onOpenSettings }: { error: ErrorInfo; onRetry: () => void; onSwitchModel: () => void; onOpenSettings: () => void }) {
   const keyProblem = error.kind === "missingKey" || error.kind === "invalidKey";
   return (
-    <div role="alert" data-testid="error-card" className="mt-3 flex flex-col gap-3 rounded-menu border border-danger bg-danger-soft p-4">
+    <div role="alert" data-testid="error-card" className="mt-3 flex flex-col gap-3 rounded-menu border border-danger bg-raised p-4">
       <div className="flex items-start gap-3">
         <Icon icon={CircleAlert} size="md" className="text-danger-text" />
         <p className="text-label text-fg">{error.message}</p>
