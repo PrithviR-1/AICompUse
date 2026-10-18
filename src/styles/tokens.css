@@ -1,0 +1,166 @@
+/*
+ * Machi design tokens (§15.10). This is the ONLY file that defines colors, radii, the
+ * type scale, shadows, motion and layout sizes. Components reference these through the
+ * Tailwind theme in index.css. A redesign replaces this file and presentational
+ * components only (§11.1).
+ *
+ * Dark is the primary theme. Themes are scoped by [data-theme] so the gallery can show
+ * both side by side.
+ */
+
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --bg: #0e0e10;
+  --bg-rail: #0e0e10;
+  --surface-raised: #18181b;
+  --surface-bubble: #222226;
+  --surface-hover: #1f1f23;
+  --surface-active: #26262b;
+  --surface-sunken: #0a0a0c;
+  --surface-overlay: rgb(0 0 0 / 0.6);
+
+  /* Lines */
+  --border: #2a2a2f;
+  --border-strong: #3a3a41;
+
+  /* Text */
+  --text: #f4f4f5;
+  --text-muted: #a1a1aa;
+  --text-faint: #8a8a94;
+
+  /* The single accent (§15.0 item 5) and its derived tints */
+  --accent: #7c7cf2;
+  --accent-strong: #6366f1;
+  --accent-fill: #6366f1;
+  --accent-fill-hover: #7373f4;
+  --accent-contrast: #ffffff;
+  --accent-soft: color-mix(in srgb, var(--accent) 16%, transparent);
+  --accent-ring: color-mix(in srgb, var(--accent) 60%, transparent);
+
+  /* Status */
+  --danger: #ef4444;
+  --danger-text: #f87171;
+  --danger-contrast: #ffffff;
+  --danger-strong: #dc2626;
+  --danger-soft: color-mix(in srgb, var(--danger) 10%, transparent);
+  --success: #22c55e;
+
+  /* Elevation (popovers, menus and dialogs only) */
+  --elevation-popover: 0 8px 24px rgb(0 0 0 / 0.35);
+
+  /* Monogram avatar palette: 12 muted colors, white text (§15.9) */
+  --avatar-text: #ffffff;
+  --avatar-1: #4a6aa0;
+  --avatar-2: #2f7470;
+  --avatar-3: #3d7449;
+  --avatar-4: #66702c;
+  --avatar-5: #8c6420;
+  --avatar-6: #a04e38;
+  --avatar-7: #9c4566;
+  --avatar-8: #7a4a8c;
+  --avatar-9: #5b54a3;
+  --avatar-10: #4b6578;
+  --avatar-11: #2d6d88;
+  --avatar-12: #6a5e55;
+
+  /* Code highlighting (Shiki css-variables theme) */
+  --code-fg: #e4e4e7;
+  --code-comment: #8a8a94;
+  --code-keyword: #c4a7f5;
+  --code-string: #9fd8a8;
+  --code-number: #f2c48d;
+  --code-function: #8fb8f5;
+  --code-constant: #f2a38d;
+  --code-parameter: #e4e4e7;
+  --code-punctuation: #a1a1aa;
+  --code-link: #9d9df6;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: #ffffff;
+  --bg-rail: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-bubble: #f1f1f4;
+  --surface-hover: #f4f4f6;
+  --surface-active: #e9e9ee;
+  --surface-sunken: #f6f6f8;
+  --surface-overlay: rgb(24 24 27 / 0.4);
+
+  --border: #e4e4e9;
+  --border-strong: #d4d4da;
+
+  --text: #18181b;
+  --text-muted: #62626b;
+  --text-faint: #6f6f78;
+
+  --accent: #5a5ae6;
+  --accent-strong: #4f46e5;
+  --accent-fill: #5a5ae6;
+  --accent-fill-hover: #4f46e5;
+
+  --danger: #dc2626;
+  --danger-text: #b91c1c;
+  --danger-strong: #b91c1c;
+  --success: #16a34a;
+
+  --elevation-popover: 0 8px 24px rgb(24 24 27 / 0.12);
+
+  --code-fg: #27272a;
+  --code-comment: #6f6f78;
+  --code-keyword: #7c3aed;
+  --code-string: #15803d;
+  --code-number: #b45309;
+  --code-function: #1d4ed8;
+  --code-constant: #c2410c;
+  --code-parameter: #27272a;
+  --code-punctuation: #62626b;
+  --code-link: #4b4bd6;
+}
+
+:root {
+  /* Type (§15.10): system stack, fixed scale 12/13/14/15/16/20/28/56 */
+  --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI Variable", "Segoe UI", Inter, system-ui, sans-serif;
+  --font-code: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --font-size-caption: 0.75rem;
+  --font-size-meta: 0.8125rem;
+  --font-size-label: 0.875rem;
+  --font-size-body: 0.9375rem;
+  --font-size-title: 1rem;
+  --font-size-heading: 1.25rem;
+  --font-size-page: 1.75rem;
+  --font-size-display: 3.5rem;
+  --line-height-message: 1.65;
+
+  /* Radius (§15.10) */
+  --shape-control: 8px;
+  --shape-menu: 12px;
+  --shape-dialog: 16px;
+  --shape-card: 20px;
+  --shape-tile: 22px;
+  --shape-avatar: 24%;
+
+  /* Layout (§15.2–§15.7) */
+  --rail-width: 3.5rem;
+  --flyout-width: 17.5rem;
+  --header-height: 3.5rem;
+  --column-width: 47.5rem;
+  --home-width: 66.25rem;
+  --settings-width: 40rem;
+  --dialog-width: 26.25rem;
+  --tile-size: 6rem;
+  --avatar-sm: 1.75rem;
+  --avatar-md: 2.5rem;
+  --avatar-lg: 6rem;
+  --mark-size: 2rem;
+
+  /* Motion (§15.10) */
+  --duration-fast: 120ms;
+  --duration-base: 150ms;
+  --duration-slow: 180ms;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}

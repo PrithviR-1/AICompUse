@@ -1,0 +1,16 @@
+# OS adapters behind traits (§1.4). Phase 0 holds only platform facts needed by the chat app.
+[package]
+name = "machi-platform"
+description = "Machi OS adapters (accessibility, capture and input arrive in Phase A)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+serde = { workspace = true }
+specta = { workspace = true }
+
+[lints]
+workspace = true

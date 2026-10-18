@@ -28,9 +28,9 @@ source "$HOME/.cargo/env" 2>/dev/null; export NVM_DIR="$HOME/.nvm"; [ -s "$NVM_D
 - [x] 0.1 §14 bootstrap (table above)
 
 ### 1. Scaffold
-- [ ] 1.1 create-tauri-app (React + TS, pnpm), converted to the §1.2 layout and a Cargo workspace (`src-tauri`, `crates/machi-core`, `crates/machi-platform`)
-- [ ] 1.2 Tailwind v4 + shadcn/ui foundations (Radix, cva, tailwind-merge), `src/styles/tokens.css` wired
-- [ ] 1.3 Window defaults (§15.2: 1280×820, min 960×620), bundle id `com.machi.app`
+- [x] 1.1 create-tauri-app (React + TS, pnpm), converted to the §1.2 layout and a Cargo workspace (`src-tauri`, `crates/machi-core`, `crates/machi-platform`)
+- [x] 1.2 Tailwind v4 + shadcn/ui foundations (Radix, cva, tailwind-merge), `src/styles/tokens.css` wired
+- [x] 1.3 Window defaults (§15.2: 1280×820, min 960×620), bundle id `com.machi.app`
 - [ ] 1.4 tauri-specta binding generation into `src/lib/bindings.ts`
 - [ ] 1.5 Scripts: `pnpm lint` (ESLint + UI token check + dependency denylist), `pnpm typecheck`, `pnpm test` (Vitest + RTL)
 - [ ] 1.6 CI workflow `.github/workflows/ci.yml` (windows-latest + macos-latest)

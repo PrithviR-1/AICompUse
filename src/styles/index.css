@@ -1,0 +1,206 @@
+/*
+ * Global stylesheet: Tailwind v4 wired to the design tokens in tokens.css.
+ * Tailwind's default palette, radii, type scale and shadows are removed so components
+ * can only use token-backed utilities (§11.1, §15.10).
+ */
+@import "tailwindcss";
+@import "./tokens.css";
+@import "katex/dist/katex.min.css";
+
+/*
+ * State variants also match a data-force attribute so the /gallery route can show
+ * hover, active and focus-visible states statically (§15.12 b).
+ */
+@custom-variant hover (&:hover:not(:disabled, [aria-disabled="true"]), &[data-force~="hover"]);
+@custom-variant active (&:active:not(:disabled, [aria-disabled="true"]), &[data-force~="active"]);
+@custom-variant focus-visible (&:focus-visible, &[data-force~="focus"]);
+
+@theme {
+  --color-*: initial;
+  --radius-*: initial;
+  --text-*: initial;
+  --shadow-*: initial;
+  --font-*: initial;
+  --ease-*: initial;
+  --animate-*: initial;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-rail: var(--bg-rail);
+  --color-raised: var(--surface-raised);
+  --color-bubble: var(--surface-bubble);
+  --color-hover: var(--surface-hover);
+  --color-active: var(--surface-active);
+  --color-sunken: var(--surface-sunken);
+  --color-overlay: var(--surface-overlay);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-fg: var(--text);
+  --color-muted: var(--text-muted);
+  --color-faint: var(--text-faint);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-fill: var(--accent-fill);
+  --color-accent-fill-hover: var(--accent-fill-hover);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-ring: var(--accent-ring);
+  --color-danger: var(--danger);
+  --color-danger-text: var(--danger-text);
+  --color-danger-strong: var(--danger-strong);
+  --color-danger-contrast: var(--danger-contrast);
+  --color-danger-soft: var(--danger-soft);
+  --color-success: var(--success);
+  --color-avatar-text: var(--avatar-text);
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --font-sans: var(--font-ui);
+  --font-mono: var(--font-code);
+
+  --text-caption: var(--font-size-caption);
+  --text-caption--line-height: 1rem;
+  --text-meta: var(--font-size-meta);
+  --text-meta--line-height: 1.125rem;
+  --text-label: var(--font-size-label);
+  --text-label--line-height: 1.25rem;
+  --text-body: var(--font-size-body);
+  --text-body--line-height: 1.5rem;
+  --text-title: var(--font-size-title);
+  --text-title--line-height: 1.5rem;
+  --text-heading: var(--font-size-heading);
+  --text-heading--line-height: 1.75rem;
+  --text-page: var(--font-size-page);
+  --text-page--line-height: 2.25rem;
+  --text-display: var(--font-size-display);
+  --text-display--line-height: 1;
+
+  --radius-control: var(--shape-control);
+  --radius-menu: var(--shape-menu);
+  --radius-dialog: var(--shape-dialog);
+  --radius-card: var(--shape-card);
+  --radius-tile: var(--shape-tile);
+  --radius-avatar: var(--shape-avatar);
+  --radius-full: 9999px;
+
+  --shadow-popover: var(--elevation-popover);
+
+  --ease-out: var(--motion-ease);
+
+  --animate-pulse-dot: pulse-dot 1.2s ease-in-out infinite;
+  --animate-shimmer: shimmer 1.4s ease-in-out infinite;
+  --animate-spin: spin 0.8s linear infinite;
+  --animate-fade-in: fade-in var(--duration-base) var(--motion-ease);
+  --animate-pop-in: pop-in var(--duration-base) var(--motion-ease);
+  --animate-slide-in: slide-in var(--duration-slow) var(--motion-ease);
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 0.35; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1); }
+}
+@keyframes shimmer {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes pop-in {
+  from { opacity: 0; transform: translateY(4px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes slide-in {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: none; }
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: var(--font-size-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow: hidden;
+  }
+
+  [data-theme] {
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+  }
+
+  button,
+  [role="button"] {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+
+  /* Thin scrollbars: transparent track, border-colored thumb, visible on hover (§15.10). */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+  *:hover {
+    scrollbar-color: var(--border) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 9999px;
+  }
+  *:hover::-webkit-scrollbar-thumb {
+    background: var(--border);
+  }
+
+  /* Default focus ring for anything focusable that has no explicit style. */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Motion: keep only opacity changes when the user asks for reduced motion (§15.10). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-property: opacity !important;
+  }
+}

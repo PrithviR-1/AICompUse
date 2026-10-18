@@ -1,0 +1,33 @@
+# All Machi logic with no Tauri dependency (§1.1): providers, store, secrets, chat, telemetry.
+[package]
+name = "machi-core"
+description = "Machi core logic: providers, store, secrets, chat orchestration"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+tokio = { workspace = true }
+tokio-util = { workspace = true }
+futures-util = { workspace = true }
+tracing = { workspace = true }
+specta = { workspace = true }
+uuid = { workspace = true }
+reqwest = { version = "0.13", default-features = false, features = ["native-tls", "charset", "http2", "system-proxy", "json", "stream"] }
+rusqlite = { version = "0.40", features = ["bundled"] }
+keyring = "4"
+dotenvy = "0.15"
+toml = "1"
+rand = "0.10"
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["test-util"] }
+tempfile = "3"
+
+[lints]
+workspace = true
