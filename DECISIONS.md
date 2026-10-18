@@ -8,12 +8,12 @@ Judgment calls made while building, each with context, decision and consequence 
 - **Consequence:** the app works with only the Mixroute key, as the exit criteria require, and an OpenRouter key also works if supplied.
 
 ## D2 — Section 15 appended to the spec
-- **Context:** the user supplied §15 (Poe-style professional UI addendum) in the session prompt. It overrides §11's layout and style rules and adds exit criteria.
+- **Context:** the user supplied §15 (the professional UI addendum modeled on a reference aggregator) in the session prompt. It overrides §11's layout and style rules and adds exit criteria.
 - **Decision:** append it verbatim to `docs/MASTER_PROMPT.md` so that it survives context resets and is part of the source of truth.
 - **Consequence:** where §11 and §15 conflict, §15 wins (window 1280×820 / min 960×620, icon rail instead of the 260 px sidebar, §15.10 tokens instead of the §11.2 blue accent, settings as a full-page route instead of a modal, no model pill in the composer, no suggestion chips).
 
 ## D3 — The reference screenshot is not stored in the repository
-- **Context:** §15.1 mentions `docs/reference/poe-home.png`, but §15.13 forbids any Poe logo or artwork anywhere in the repository, and the screenshot contains Poe's logo, wordmark and bot icons.
+- **Context:** §15.1 mentions a reference screenshot under `docs/reference/`, but §15.13 forbids the reference app's logo or artwork anywhere in the repository, and the screenshot contains its logo, wordmark and bot icons.
 - **Decision:** do not commit it. Compare against the screenshot from the session and the measurements in §15.1.
 - **Consequence:** the repository stays free of third-party brand assets.
 

@@ -1,5 +1,16 @@
 # PROGRESS — Phase 0 (desktop app shell + chat, no computer use)
 
+## Status when the session paused (2026-10-18) — Phase 0 NOT complete yet
+Done and committed: bootstrap, scaffold/CI, secrets, store, providers (+ live smoke test), chat service, 28 Tauri commands, full UI (§15 design system, gallery, shell, home, chat, picker, compare, Models, Settings, search), 97 Rust tests, 118 Vitest tests, 28 Playwright tests (all passing), screenshots in `docs/screenshots/`.
+
+Next steps, in order:
+1. **6.3 visual review loop:** open every image in `docs/screenshots/` (Read tool), apply the §15.0 rubric, list deviations below, fix, re-run `pnpm e2e`.
+2. **6.2:** confirm the §11.12 checks end to end (keyboard-only pass, contrast test, token check, 200-message test, denylist are all in place and green).
+3. **7.1:** live verification of chat flows with `gpt-4.1-nano` (cheap) and `gpt-4.1` (premium); for example, extend `cargo run --example smoke` to cover stop, branching and compare through `ChatService`.
+4. **7.2:** `pnpm tauri build` (needs ≈ 2 GB free, see B1) and launch the app.
+5. **7.3:** check every exit criterion, then write the final summary here.
+
+
 Work order follows §12 Phase 0 and §15.12. Each box is ticked only after its checks pass and it is committed.
 
 ## Shell prefix used for every command
@@ -65,10 +76,10 @@ source "$HOME/.cargo/env" 2>/dev/null; export NVM_DIR="$HOME/.nvm"; [ -s "$NVM_D
 - [x] 5.12 Global search palette (Ctrl/Cmd+Shift+F)
 
 ### 6. Hardening
-- [ ] 6.1 Error states (rate limit inline + switch model), export, delete-all data
+- [x] 6.1 Error states (rate limit inline + switch model), export, delete-all data
 - [ ] 6.2 §11.12 checks: keyboard, contrast, no hard-coded colors/radii/font sizes, 200-message virtualized list, dependency denylist
 - [ ] 6.3 Playwright e2e + screenshots (§15.12) in both themes + visual review loop
-- [ ] 6.4 Repository grep for "Poe" passes (§15.13)
+- [x] 6.4 Repository grep for the reference app's name passes (§15.13) — only the spec matches, plus one coincidental substring inside a pnpm-lock integrity hash
 
 ### 7. Exit verification
 - [ ] 7.1 Live verification of core chat flows with a cheap and a premium model
