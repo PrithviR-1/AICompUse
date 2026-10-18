@@ -47,24 +47,26 @@ jobs:
         run: pnpm test
 
       # One command per step on the default shell (PowerShell on Windows, bash on macOS):
-      # Git Bash on Windows couldn't resolve the chained command (exit 127).
+      # Git Bash on Windows couldn't resolve the chained command (exit 127). Rust and Tauri
+      # steps run through scripts/ci-run.mjs, which turns a failure's output into an
+      # annotation (readable without a token, unlike raw logs).
       - name: Regenerate bindings
-        run: cargo run -q -p machi --example export_bindings
+        run: node scripts/ci-run.mjs cargo run -p machi --example export_bindings
 
       - name: Generated bindings are up to date
         run: git diff --exit-code src/lib/bindings.ts
 
       - name: cargo fmt
-        run: cargo fmt --all --check
+        run: node scripts/ci-run.mjs cargo fmt --all --check
 
       - name: cargo clippy
-        run: cargo clippy --workspace --all-targets -- -D warnings
+        run: node scripts/ci-run.mjs cargo clippy --workspace --all-targets -- -D warnings
 
       - name: cargo test
-        run: cargo test --workspace
+        run: node scripts/ci-run.mjs cargo test --workspace
 
       - name: Tauri debug build
-        run: pnpm tauri build --debug
+        run: node scripts/ci-run.mjs pnpm tauri build --debug
 
   e2e:
     name: Playwright UI suite (mock backend)
