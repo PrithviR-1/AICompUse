@@ -19,7 +19,7 @@ source "$HOME/.cargo/env" 2>/dev/null; export NVM_DIR="$HOME/.nvm"; [ -s "$NVM_D
 | 7. Mixroute key | `grep -c '^MIXROUTE_API_KEY=.' .env` → 1 — OK |
 | 8. Git repository | `.git` present on `main`; `.gitignore` created; user.name/user.email set — OK |
 | 9. GitHub remote | none — committing locally only (B2) |
-| 10. Tauri prerequisites | pending (after scaffold, task 1.7) |
+| 10. Tauri prerequisites | `pnpm tauri info` clean after raising `rust-version` to 1.90 (see below) |
 | 11. Keep-awake | `caffeinate -dims` started in background |
 
 ## Phase 0 checklist
@@ -33,8 +33,8 @@ source "$HOME/.cargo/env" 2>/dev/null; export NVM_DIR="$HOME/.nvm"; [ -s "$NVM_D
 - [x] 1.3 Window defaults (§15.2: 1280×820, min 960×620), bundle id `com.machi.app`
 - [x] 1.4 tauri-specta binding generation into `src/lib/bindings.ts`
 - [x] 1.5 Scripts: `pnpm lint` (ESLint + UI token check + dependency denylist), `pnpm typecheck`, `pnpm test` (Vitest + RTL)
-- [ ] 1.6 CI workflow `.github/workflows/ci.yml` (windows-latest + macos-latest)
-- [ ] 1.7 `pnpm tauri info` recorded below
+- [x] 1.6 CI workflow `.github/workflows/ci.yml` (windows-latest + macos-latest)
+- [x] 1.7 `pnpm tauri info` recorded below
 
 ### 2. Secrets
 - [ ] 2.1 `secrets`: keychain storage behind a trait + debug-only `.env` fallback, tests
@@ -76,7 +76,9 @@ source "$HOME/.cargo/env" 2>/dev/null; export NVM_DIR="$HOME/.nvm"; [ -s "$NVM_D
 - [ ] 7.3 All exit criteria (§12 + §15.13) reviewed; summary written at the top of this file
 
 ## `pnpm tauri info`
-(pending)
+- Environment: macOS 14.6.1 x86_64, Xcode 16.2 + CLT, rustc/cargo 1.99.1 (stable-x86_64-apple-darwin), node 24.14.0, pnpm 12.14.0.
+- Packages: tauri 2.12.4, tauri-build 2.7.3, wry 0.57.0, tao 0.37.1, @tauri-apps/api 2.12.4, @tauri-apps/cli 2.12.3; tauri-plugin-opener 2.7.2 (Rust and JS).
+- First run flagged a Rust/JS minor-version mismatch: the MSRV-aware resolver had picked tauri 2.11 because the workspace declared `rust-version = 1.85`. Raised to 1.90 (tauri 2.12's MSRV), `cargo update`, mismatch gone. Nothing needing sudo or a GUI was flagged.
 
 ## Visual review — deviation list (§15.12)
 (pending)

@@ -1,0 +1,5 @@
+# Normalize line endings so generated files diff cleanly on Windows CI.
+* text=auto eol=lf
+*.png binary
+*.ico binary
+*.icns binary

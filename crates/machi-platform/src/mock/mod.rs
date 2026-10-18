@@ -33,6 +33,9 @@ mod tests {
     #[test]
     fn mock_uses_platform_specific_modifier() {
         assert_eq!(MockPlatform::new(OsKind::MacOs).info().modifier_label, "⌘");
-        assert_eq!(MockPlatform::new(OsKind::Windows).info().modifier_label, "Ctrl");
+        assert_eq!(
+            MockPlatform::new(OsKind::Windows).info().modifier_label,
+            "Ctrl"
+        );
     }
 }
