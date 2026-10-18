@@ -1,9 +1,13 @@
 // UI token check (§11.12, §15.10): components may not hard-code colors, radii, font sizes
 // or off-grid spacing. Everything must come from src/styles/tokens.css via Tailwind utilities.
 import { readFileSync, readdirSync, statSync } from "node:fs";
-import { join, relative } from "node:path";
+import { join, relative, sep } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const ROOT = new URL("..", import.meta.url).pathname;
+// fileURLToPath, not URL.pathname: on Windows the pathname is "/D:/…", which breaks path joins.
+const ROOT = fileURLToPath(new URL("..", import.meta.url));
+/** Repo-relative path with forward slashes on every OS, for the allow/skip lists. */
+const toRel = (full) => relative(ROOT, full).split(sep).join("/");
 const SRC = join(ROOT, "src");
 const ALLOWED_FILES = new Set(["src/styles/tokens.css", "src/lib/bindings.ts"]);
 
@@ -36,7 +40,7 @@ function stripComments(source) {
 
 const problems = [];
 for (const file of walk(SRC)) {
-  const rel = relative(ROOT, file);
+  const rel = toRel(file);
   if (ALLOWED_FILES.has(rel) || rel.startsWith("src/test/")) continue;
   const source = stripComments(readFileSync(file, "utf8"));
   const lines = source.split("\n");
