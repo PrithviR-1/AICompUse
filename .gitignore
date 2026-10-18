@@ -1,0 +1,18 @@
+# Dependencies and build output
+node_modules/
+dist/
+target/
+src-tauri/target/
+src-tauri/gen/schemas/
+coverage/
+playwright-report/
+test-results/
+
+# Secrets and local data
+.env*
+*.db
+*.sqlite
+*.sqlite-journal
+
+# OS
+.DS_Store
