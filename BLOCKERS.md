@@ -12,3 +12,12 @@ Things only the user can provide or do. HARD blockers stop the build; SOFT block
 - **What:** `git remote get-url origin` fails. The repository is local only.
 - **Why it matters:** the Phase 0 exit criterion "CI is green on both OSes" can only be checked on GitHub Actions (windows-latest + macos-latest). The workflow file is written and every step it runs is also run locally on macOS.
 - **What to do:** create a GitHub repository, then `git remote add origin <url> && git push -u origin main`, and check the Actions tab.
+
+## B3 — SOFT — Windows build and hands-on check
+- **What:** the Windows code paths (`machi-platform::win`, the Windows keychain store via `keyring`, SChannel TLS, the Tauri Windows bundle) compile only in CI on `windows-latest`, which can't run until B2 is resolved. Nothing has been run on Windows.
+- **Why it matters:** §13.2 item 6 requires hands-on verification on the other OS; the exit criterion "CI is green on both OSes" depends on it.
+- **What to do:** after pushing (B2), check the Windows job in GitHub Actions, then run the built app on a Windows 10+ machine once: add the Mixroute key, send a message, stop it, and restart the app to confirm the key persists.
+
+## B4 — SOFT — Clicking through the desktop app
+- **What:** the UI flows are verified in Chromium against the mock backend (28 Playwright tests) and the backend flows live against Mixroute (`cargo run --example live_chat`), but nobody has clicked through the packaged macOS app itself (WebDriver for Tauri isn't available on macOS).
+- **What to do:** open `target/release/bundle/macos/Machi.app` and try a chat, stop, compare, an image on GPT-4.1, rename/pin/delete in the Chats panel, and export (the file lands in Downloads).
