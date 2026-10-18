@@ -1,0 +1,220 @@
+# Model metadata overrides and tier defaults (§11.4, §6).
+#
+# Mixroute's GET /models returns IDs only, so names, prices, context windows and
+# capabilities come from this file. Models seeded here but missing from the live list
+# are hidden; live models not seeded here are shown with unknown metadata.
+#
+# Prices: USD per 1M tokens, from the Mixroute catalogue (https://mixroute.ai/models/),
+# checked 2026-10-18. The catalogue lists IDs as slugs (dots become dashes, e.g.
+# `gemini-3-5-flash-lite` is the API ID `gemini-3.5-flash-lite`). A price that could not be
+# confirmed there is omitted and shown as "Price unknown" — never guessed.
+# Context windows: Mixroute docs where listed, otherwise the vendor's documentation.
+# `free = true` only for models confirmed zero-priced AND present in GET /models.
+# `rank`: lower = shown earlier in the home Models row (most capable and popular first).
+
+[defaults]
+chat_model = "mixroute:gpt-4.1-nano"
+title_model = "mixroute:gpt-4.1-nano"
+
+# Agent model tiers (§6), used from Phase A. T0 is deterministic replay (no model).
+[tiers]
+t1 = ["mixroute:gpt-4.1-nano", "mixroute:gpt-5-nano"]
+t2 = ["mixroute:gpt-4.1-mini", "mixroute:gemini-2.5-flash", "mixroute:gpt-5-mini"]
+t3 = ["mixroute:gpt-5", "mixroute:gpt-4.1"]
+
+# --- OpenAI ---------------------------------------------------------------------------
+
+[[models]]
+id = "gpt-5"
+name = "GPT-5"
+vendor = "OpenAI"
+context = 400000
+input_price = 1.25
+output_price = 10.00
+vision = true
+tools = true
+structured_output = true
+reasoning = true
+rank = 1
+
+[[models]]
+id = "gpt-5-mini"
+name = "GPT-5 mini"
+vendor = "OpenAI"
+context = 400000
+input_price = 0.25
+output_price = 2.00
+vision = true
+tools = true
+structured_output = true
+reasoning = true
+rank = 6
+
+[[models]]
+id = "gpt-5-nano"
+name = "GPT-5 nano"
+vendor = "OpenAI"
+context = 400000
+input_price = 0.05
+output_price = 0.40
+vision = true
+tools = true
+structured_output = true
+reasoning = true
+rank = 13
+
+[[models]]
+id = "gpt-4.1"
+name = "GPT-4.1"
+vendor = "OpenAI"
+context = 1047576
+vision = true
+tools = true
+structured_output = true
+rank = 3
+
+[[models]]
+id = "gpt-4.1-mini"
+name = "GPT-4.1 mini"
+vendor = "OpenAI"
+context = 1047576
+vision = true
+tools = true
+structured_output = true
+rank = 10
+
+[[models]]
+id = "gpt-4.1-nano"
+name = "GPT-4.1 nano"
+vendor = "OpenAI"
+context = 1047576
+vision = true
+tools = true
+structured_output = true
+rank = 12
+
+[[models]]
+id = "gpt-4o-mini"
+name = "GPT-4o mini"
+vendor = "OpenAI"
+context = 128000
+vision = true
+tools = true
+structured_output = true
+rank = 11
+
+[[models]]
+id = "gpt-4o-2024-11-20"
+name = "GPT-4o (Nov 2024)"
+vendor = "OpenAI"
+context = 128000
+vision = true
+tools = true
+structured_output = true
+rank = 14
+
+[[models]]
+id = "gpt-4o-2024-08-06"
+name = "GPT-4o (Aug 2024)"
+vendor = "OpenAI"
+context = 128000
+vision = true
+tools = true
+structured_output = true
+rank = 15
+
+# --- Google ---------------------------------------------------------------------------
+
+[[models]]
+id = "gemini-2.5-flash"
+name = "Gemini 2.5 Flash"
+vendor = "Google"
+context = 1048576
+input_price = 0.30
+output_price = 2.50
+vision = true
+tools = true
+structured_output = true
+reasoning = true
+rank = 2
+
+[[models]]
+id = "gemini-3.5-flash-lite"
+name = "Gemini 3.5 Flash Lite"
+vendor = "Google"
+context = 1000000
+input_price = 0.30
+output_price = 1.20
+vision = true
+tools = true
+rank = 8
+
+# Image-generation model: its output is images, which the chat view does not render.
+[[models]]
+id = "gemini-2.5-flash-image"
+name = "Gemini 2.5 Flash Image"
+vendor = "Google"
+input_price = 0.30
+output_price = 30.00
+vision = true
+hidden = true
+
+# --- DeepSeek -------------------------------------------------------------------------
+
+[[models]]
+id = "deepseek-v4-flash"
+name = "DeepSeek V4 Flash"
+vendor = "DeepSeek"
+context = 1000000
+input_price = 0.14
+output_price = 0.28
+tools = true
+reasoning = true
+rank = 4
+
+# --- Moonshot -------------------------------------------------------------------------
+
+[[models]]
+id = "kimi-k2.5"
+name = "Kimi K2.5"
+vendor = "Moonshot"
+context = 256000
+input_price = 0.60
+output_price = 3.00
+vision = true
+tools = true
+reasoning = true
+rank = 5
+
+# --- Alibaba --------------------------------------------------------------------------
+
+[[models]]
+id = "qwen3.6-flash"
+name = "Qwen3.6 Flash"
+vendor = "Alibaba"
+input_price = 0.25
+output_price = 1.50
+vision = true
+tools = true
+rank = 7
+
+# --- MiniMax --------------------------------------------------------------------------
+
+[[models]]
+id = "MiniMax-M2.5"
+name = "MiniMax M2.5"
+vendor = "MiniMax"
+input_price = 0.30
+output_price = 1.20
+tools = true
+rank = 9
+
+# --- Zhipu ----------------------------------------------------------------------------
+
+# Listed as free on the Mixroute website, but its ID is not in GET /models (checked
+# 2026-10-18), so it is not marked free and stays hidden until Mixroute serves it.
+[[models]]
+id = "glm-4-flash"
+name = "GLM-4 Flash"
+vendor = "Zhipu"
+rank = 16

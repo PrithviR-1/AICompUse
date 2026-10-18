@@ -51,3 +51,16 @@ Judgment calls made while building, each with context, decision and consequence 
 - **Context:** Tailwind v4's `@theme` namespaces (`--radius-*`, `--shadow-*`, `--ease-*`) would emit self-referencing variables if tokens.css used the same names.
 - **Decision:** tokens.css uses `--shape-*` for radii, `--elevation-popover` for the shadow and `--motion-ease` for easing, and `index.css` maps them to Tailwind's `rounded-*`, `shadow-*` and `ease-*` utilities. Default Tailwind colors, radii, font sizes and shadows are removed so only token-backed utilities exist.
 - **Consequence:** a component cannot use a non-token color, radius or font size without failing the build or the UI check.
+
+## D11 — Model catalog seeding (2026-10-18)
+- **Context:** Mixroute's `GET /models` returned 23 IDs (with `owned_by` and `supported_endpoint_types` only). The public catalogue at mixroute.ai/models lists prices using slug IDs (dots become dashes). `mixroute.ai/pricing` has no per-model table. The docs page lists context windows for a few models.
+- **Decision:**
+  - Prices confirmed in the catalogue are seeded: gpt-5 (1.25/10.00), gpt-5-mini (0.25/2.00), gpt-5-nano (0.05/0.40), deepseek-v4-flash (0.14/0.28), gemini-2.5-flash (0.30/2.50), gemini-3.5-flash-lite (0.30/1.20), kimi-k2.5 (0.60/3.00), qwen3.6-flash (0.25/1.50), MiniMax-M2.5 (0.30/1.20).
+  - The gpt-4.1 and gpt-4o families are live but not in the catalogue, so their prices are omitted and shown as "Price unknown".
+  - `glm-4-flash` is listed as free on the website but is **not** in `GET /models`, so it is seeded without `free = true` and stays hidden until Mixroute serves it.
+  - Dated snapshot IDs (`gpt-4.1-2025-04-14`, …) are hidden when the undated ID is live, to avoid duplicate rows.
+  - `gemini-2.5-flash-image` is seeded with `hidden = true` because it is an image-generation model whose output the chat view doesn't render.
+  - Context windows come from the Mixroute docs where listed (deepseek-v4-flash, gemini-3.5-flash-lite, kimi-k2.5), otherwise from vendor documentation; unknown ones are omitted.
+  - The seed file is embedded with `include_str!` so the app needs no resource lookup.
+  - Cheap test model: `gpt-4.1-nano` (spec default). Premium test model: `gpt-5`, the most capable model Mixroute serves (no Claude/Opus model is live).
+- **Consequence:** the Models page shows real prices where confirmed and "Price unknown" elsewhere. Adding a model is a `config/models.toml` edit.
