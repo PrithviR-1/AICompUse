@@ -6,7 +6,7 @@ Done and committed: bootstrap, scaffold/CI, secrets, store, providers (+ live sm
 Next steps, in order:
 1. ~~6.3 visual review loop~~ done (two rounds; list empty).
 2. ~~6.2 §11.12 checks~~ done (contrast test, token check, 200-message virtualization test, denylist and keyboard e2e all green).
-3. **7.1:** live verification of chat flows with `gpt-4.1-nano` (cheap) and `gpt-4.1` (premium); for example, extend `cargo run --example smoke` to cover stop, branching and compare through `ChatService`.
+3. ~~7.1 live verification~~ done (`cargo run --example live_chat`, all checks passed).
 4. **7.2:** `pnpm tauri build` (needs ≈ 2 GB free, see B1) and launch the app.
 5. **7.3:** check every exit criterion, then write the final summary here.
 
@@ -82,7 +82,7 @@ source "$HOME/.cargo/env" 2>/dev/null; export NVM_DIR="$HOME/.nvm"; [ -s "$NVM_D
 - [x] 6.4 Repository grep for the reference app's name passes (§15.13) — only the spec matches, plus one coincidental substring inside a pnpm-lock integrity hash
 
 ### 7. Exit verification
-- [ ] 7.1 Live verification of core chat flows with a cheap and a premium model
+- [x] 7.1 Live verification of core chat flows with a cheap and a premium model — `cargo run --example live_chat` (2026-10-18): live model list (15 IDs); with `gpt-4.1-nano` and `gpt-4.1` each: streaming, stop mid-stream, switching models mid-chat with context kept, regenerate branch, edit branch, generated title; compare mode with both models + "continue with column 2"; image on `gpt-4.1` read correctly (271 prompt tokens), image blocked on `gpt-4.1-nano`. All passed. Rate-limit handling is covered by the 429 fixture tests, the core inline-error test and the e2e error screenshot (a live 429 can't be triggered on demand).
 - [ ] 7.2 `pnpm tauri build` produces a working app on this machine
 - [ ] 7.3 All exit criteria (§12 + §15.13) reviewed; summary written at the top of this file
 
