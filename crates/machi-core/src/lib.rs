@@ -1,5 +1,6 @@
 //! Machi core: every piece of application logic that does not need Tauri (§1.1, §1.3).
 
+pub mod chat;
 pub mod directory;
 pub mod error;
 pub mod models;
