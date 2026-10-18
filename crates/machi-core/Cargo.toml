@@ -26,7 +26,7 @@ toml = "1"
 rand = "0.10"
 
 [dev-dependencies]
-tokio = { workspace = true, features = ["test-util"] }
+tokio = { workspace = true, features = ["test-util", "net", "io-util"] }
 tempfile = "3"
 
 [lints]
