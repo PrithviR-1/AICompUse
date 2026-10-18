@@ -8,12 +8,14 @@ Things only the user can provide or do. HARD blockers stop the build; SOFT block
 - **Update:** the disk briefly fell to 1.3 GiB free during the build. Dependency debug info was turned off in the dev profile and the mobile crate types were dropped (D14), which cut `target/` from 6.6 GB to 1.4 GB (≈ 6.4 GiB free afterwards). The release build (`pnpm tauri build`) needs roughly another 1.5–2 GB.
 - **What to do:** free a few GB (e.g. empty the Trash, remove old Xcode simulators/derived data in `~/Library/Developer`). Work continues meanwhile with a single shared `target/` directory.
 
-## B2 — SOFT — No GitHub remote, so CI cannot run
+## B2 — RESOLVED — No GitHub remote, so CI cannot run
+- **Resolved 2026-10-18:** the repository is on GitHub (`PrithviR-1/AICompUse`) and CI is green on Windows and macOS (run 39157854244, commit 300ae4a).
 - **What:** `git remote get-url origin` fails. The repository is local only.
 - **Why it matters:** the Phase 0 exit criterion "CI is green on both OSes" can only be checked on GitHub Actions (windows-latest + macos-latest). The workflow file is written and every step it runs is also run locally on macOS.
 - **What to do:** create a GitHub repository, then `git remote add origin <url> && git push -u origin main`, and check the Actions tab.
 
-## B3 — SOFT — Windows build and hands-on check
+## B3 — SOFT — Windows hands-on check (CI part resolved)
+- **Update 2026-10-18:** the Windows CI job now passes every step (lint, typecheck, tests, bindings check, fmt, clippy, cargo test, Tauri debug build with installers). What remains is running the app on a real Windows machine once.
 - **What:** the Windows code paths (`machi-platform::win`, the Windows keychain store via `keyring`, SChannel TLS, the Tauri Windows bundle) compile only in CI on `windows-latest`, which can't run until B2 is resolved. Nothing has been run on Windows.
 - **Why it matters:** §13.2 item 6 requires hands-on verification on the other OS; the exit criterion "CI is green on both OSes" depends on it.
 - **What to do:** after pushing (B2), check the Windows job in GitHub Actions, then run the built app on a Windows 10+ machine once: add the Mixroute key, send a message, stop it, and restart the app to confirm the key persists.

@@ -2,7 +2,13 @@
 
 ## Phase 0 summary (2026-10-18)
 
-**Result:** every Phase 0 exit criterion that can be checked on this machine passes. One criterion, "CI is green on both OSes", can't run until the repository has a GitHub remote (B2/B3). Work stops here per §13.2 item 8; Phase A has not been started.
+**Result:** every Phase 0 exit criterion passes, including CI on Windows and macOS: run [39157854244](https://github.com/PrithviR-1/AICompUse/actions/runs/39157854244) on commit 300ae4a, where all three jobs (Windows build + test, macOS build + test, Playwright) are green. Work stops here per §13.2 item 8; Phase A has not been started.
+
+**CI fixes (four attempts after the first push failed on Windows):**
+1. The lint scripts resolved the repo root with `URL.pathname` (`/D:/…` on Windows) and compared backslash paths against forward-slash allow-lists. They now use `fileURLToPath` and normalized separators.
+2. The bindings check ran a chained command under Git Bash (exit 127). It's now two single-command steps on the default shell.
+3. Raw job logs need a token, so `scripts/ci-run.mjs` republishes a failing Rust/Tauri step's errors as annotations (readable through the public API).
+4. That exposed `STATUS_ENTRYPOINT_NOT_FOUND` for Tauri-linked examples and test harnesses on Windows. `src-tauri/build.rs` now embeds the Common Controls v6 manifest in every linked target (D17).
 
 ### What was built
 - **Desktop app (Tauri v2 + React 19 + TS strict + Tailwind v4).** Window 1280×820 (min 960×620), bundle id `com.machi.app`, Machi icon.
@@ -32,7 +38,7 @@
 | Direct provider key works if supplied | Pass (no key supplied) | adapter fixture tests for endpoints, headers and key checks (D13) |
 | Rate limit shows inline error with Retry and Switch model | Pass | 429 backoff tests, inline-error chat test, `chat-error-*.png` |
 | §11.12: keyboard, focus, AA contrast, no hard-coded colors, 200-message list, denylist | Pass | contrast test, `scripts/check-ui.mjs`, virtualization test, `scripts/check-deps.mjs`, keyboard e2e |
-| CI green on Windows and macOS | **Blocked (B2, B3)** | workflow written; every step passes locally on macOS |
+| CI green on Windows and macOS | Pass | run [39157854244](https://github.com/PrithviR-1/AICompUse/actions/runs/39157854244) (300ae4a): lint, typecheck, front-end tests, bindings check, fmt, clippy, cargo test and Tauri debug build on both OSes, plus the Playwright job |
 | `pnpm tauri build` produces a working app | Pass | `Machi.app` launched, core ready, UI connected (D16: the DMG step needs Finder automation, B5) |
 | §15.13 home / chat / composer structure, "@" for one message | Pass | screenshots, Playwright |
 | `/gallery` with every primitive state in both themes | Pass | `docs/screenshots/gallery.png` |
@@ -41,7 +47,7 @@
 | No reference-app name or artwork in the repository | Pass | grep matches only the spec (plus one coincidental substring in a lock-file hash) |
 
 ### Open items (details in BLOCKERS.md)
-- **B2/B3:** add a GitHub remote and push so CI runs on Windows and macOS; check the Windows app once by hand.
+- **B3:** CI builds and tests pass on Windows; running the app on a Windows machine once by hand is still recommended.
 - **B4:** click through the packaged macOS app once (UI verified in Chromium + live backend checks; there's no WebDriver for Tauri on macOS).
 - **B1:** disk is low (≈ 4.5 GiB free); `cargo clean` frees ≈ 3 GB of build output if needed.
 - **B5 (optional):** allow Finder automation to build the DMG locally.
