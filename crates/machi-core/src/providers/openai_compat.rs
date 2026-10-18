@@ -99,7 +99,10 @@ impl OpenAiCompatible {
     ) -> Result<Response, ProviderError> {
         let mut attempt = 0;
         loop {
-            let request = build().bearer_auth(self.key.expose());
+            let mut request = build().bearer_auth(self.key.expose());
+            for (name, value) in self.provider.extra_headers(self.key.expose()) {
+                request = request.header(name, value);
+            }
             let response = tokio::select! {
                 _ = cancel.cancelled() => return Err(ProviderError::Cancelled),
                 r = request.send() => r.map_err(map_reqwest_error)?,
@@ -139,6 +142,13 @@ impl OpenAiCompatible {
             .await
             .map_err(|e| ProviderError::Decode(e.to_string()))?;
         parse_models(&body)
+    }
+
+    async fn verify_key_impl(&self) -> Result<(), ProviderError> {
+        let cancel = CancellationToken::new();
+        let path = self.provider.key_check_path();
+        self.send(|| self.http.get(self.url(path)), &cancel).await?;
+        Ok(())
     }
 
     async fn stream_chat_impl(
@@ -192,6 +202,10 @@ impl ChatProvider for OpenAiCompatible {
 
     fn list_models(&self) -> BoxFuture<'_, Result<Vec<RemoteModel>, ProviderError>> {
         Box::pin(self.list_models_impl())
+    }
+
+    fn verify_key(&self) -> BoxFuture<'_, Result<(), ProviderError>> {
+        Box::pin(self.verify_key_impl())
     }
 
     fn stream_chat<'a>(
@@ -615,6 +629,45 @@ mod tests {
         );
         assert_eq!(server.requests()[0].method, "GET");
         assert_eq!(server.requests()[0].path, "/v1/models");
+    }
+
+    #[tokio::test]
+    async fn verify_key_uses_provider_specific_endpoint_and_headers() {
+        let server = TestServer::start(vec![
+            Reply::json(MODELS_LIST),
+            Reply::json(r#"{"data":{"label":"k"}}"#),
+            Reply::status(401, r#"{"error":{"message":"Invalid token"}}"#),
+        ])
+        .await;
+        let anthropic = OpenAiCompatible::new(
+            ProviderId::Anthropic,
+            &server.base_url(),
+            SecretString::new("ak"),
+        )
+        .unwrap();
+        anthropic.verify_key().await.unwrap();
+        let openrouter = OpenAiCompatible::new(
+            ProviderId::OpenRouter,
+            &server.base_url(),
+            SecretString::new("ok"),
+        )
+        .unwrap();
+        openrouter.verify_key().await.unwrap();
+        let bad = adapter(&server);
+        assert_eq!(
+            bad.verify_key().await,
+            Err(ProviderError::Unauthorized { status: 401 })
+        );
+
+        let requests = server.requests();
+        assert_eq!(requests[0].path, "/v1/models");
+        assert_eq!(requests[0].header("x-api-key").as_deref(), Some("ak"));
+        assert_eq!(
+            requests[0].header("anthropic-version").as_deref(),
+            Some("2023-06-01")
+        );
+        assert_eq!(requests[1].path, "/v1/key");
+        assert_eq!(requests[1].header("x-api-key"), None);
     }
 
     #[test]

@@ -31,8 +31,11 @@ use crate::store::Store;
 pub trait ChatProvider: Send + Sync {
     fn id(&self) -> ProviderId;
 
-    /// Live model IDs (`GET /models`). Also used to test a key.
+    /// Live model IDs (`GET /models`).
     fn list_models(&self) -> BoxFuture<'_, Result<Vec<RemoteModel>, ProviderError>>;
+
+    /// Checks that the configured key is accepted (Settings → Providers "Test").
+    fn verify_key(&self) -> BoxFuture<'_, Result<(), ProviderError>>;
 
     /// Streams a completion, calling `on_event` for each delta. Returns
     /// `Err(ProviderError::Cancelled)` promptly once `cancel` fires.

@@ -88,6 +88,28 @@ impl ProviderId {
         }
     }
 
+    /// Authenticated endpoint used to verify a key. `/models` rejects bad keys on every
+    /// provider except OpenRouter, whose model list is public.
+    pub fn key_check_path(self) -> &'static str {
+        match self {
+            ProviderId::OpenRouter => "key",
+            _ => "models",
+        }
+    }
+
+    /// Extra headers some OpenAI-compatible endpoints need besides `Authorization: Bearer`.
+    pub fn extra_headers(self, key: &str) -> Vec<(&'static str, String)> {
+        match self {
+            // Anthropic's native /v1/models expects x-api-key and a version header; its
+            // OpenAI-compatible /v1/chat/completions accepts the bearer token.
+            ProviderId::Anthropic => vec![
+                ("x-api-key", key.to_string()),
+                ("anthropic-version", "2023-06-01".to_string()),
+            ],
+            _ => Vec::new(),
+        }
+    }
+
     /// Where to create a key, shown as plain text in settings and the first-run card.
     pub fn key_hint(self) -> &'static str {
         match self {

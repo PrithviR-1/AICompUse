@@ -123,6 +123,11 @@ impl ChatProvider for ScriptedProvider {
         Box::pin(async move { result })
     }
 
+    fn verify_key(&self) -> BoxFuture<'_, Result<(), ProviderError>> {
+        let result = self.models.lock().expect("lock").clone().map(|_| ());
+        Box::pin(async move { result })
+    }
+
     fn stream_chat<'a>(
         &'a self,
         request: &'a ChatRequest,

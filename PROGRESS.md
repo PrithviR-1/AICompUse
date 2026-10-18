@@ -46,7 +46,7 @@ source "$HOME/.cargo/env" 2>/dev/null; export NVM_DIR="$HOME/.nvm"; [ -s "$NVM_D
 - [x] 4.1 `config/models.toml` seeded (prices checked against the Mixroute catalogue; unknown → null) + loader
 - [x] 4.2 OpenAI-compatible adapter: model list fetch/cache with fallback, SSE streaming, cancellation, 429 backoff, capability flags, fixture tests
 - [x] 4.3 `cargo run --example smoke` live smoke test; results recorded in DECISIONS.md
-- [ ] 4.4 Optional direct-provider adapters behind the same trait
+- [x] 4.4 Optional direct-provider adapters behind the same trait
 - [ ] 4.5 Chat service: context from the message tree, streaming persistence, stop, branching (edit/regenerate), compare, title generation, tests
 - [ ] 4.6 Tauri commands + events wired, bindings regenerated
 

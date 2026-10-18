@@ -13,7 +13,18 @@ pub struct RecordedRequest {
     pub method: String,
     pub path: String,
     pub authorization: Option<String>,
+    pub headers: Vec<(String, String)>,
     pub body: String,
+}
+
+impl RecordedRequest {
+    /// Case-insensitive header lookup.
+    pub fn header(&self, name: &str) -> Option<String> {
+        self.headers
+            .iter()
+            .find(|(n, _)| n.eq_ignore_ascii_case(name))
+            .map(|(_, v)| v.clone())
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -126,8 +137,10 @@ async fn serve(mut socket: TcpStream, reply: Reply, recorded: &Arc<Mutex<Vec<Rec
     let path = parts.next().unwrap_or_default().to_string();
     let mut content_length = 0usize;
     let mut authorization = None;
+    let mut headers = Vec::new();
     for line in lines {
         if let Some((name, value)) = line.split_once(':') {
+            headers.push((name.trim().to_string(), value.trim().to_string()));
             match name.trim().to_ascii_lowercase().as_str() {
                 "content-length" => content_length = value.trim().parse().unwrap_or(0),
                 "authorization" => authorization = Some(value.trim().to_string()),
@@ -152,6 +165,7 @@ async fn serve(mut socket: TcpStream, reply: Reply, recorded: &Arc<Mutex<Vec<Rec
             method,
             path,
             authorization,
+            headers,
             body,
         });
 
