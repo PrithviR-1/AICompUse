@@ -37,7 +37,7 @@ source "$HOME/.cargo/env" 2>/dev/null; export NVM_DIR="$HOME/.nvm"; [ -s "$NVM_D
 - [x] 1.7 `pnpm tauri info` recorded below
 
 ### 2. Secrets
-- [ ] 2.1 `secrets`: keychain storage behind a trait + debug-only `.env` fallback, tests
+- [x] 2.1 `secrets`: keychain storage behind a trait + debug-only `.env` fallback, tests
 
 ### 3. Store
 - [ ] 3.1 `store`: SQLite schema + migrations (conversations, message tree, attachments, settings, model cache), tests
