@@ -10,8 +10,9 @@ publish.workspace = true
 
 [lib]
 # The `_lib` suffix keeps the lib name distinct from the bin name (cargo#8519 on Windows).
+# Desktop only: the mobile crate types (staticlib/cdylib) are not built.
 name = "machi_lib"
-crate-type = ["staticlib", "cdylib", "rlib"]
+crate-type = ["rlib"]
 
 [build-dependencies]
 tauri-build = { version = "2", features = [] }

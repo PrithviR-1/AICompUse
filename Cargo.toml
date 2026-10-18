@@ -34,6 +34,13 @@ unwrap_used = "deny"
 expect_used = "deny"
 panic = "deny"
 
+# Keep debug builds small: full debug info for workspace crates, none for dependencies.
+[profile.dev]
+debug = "line-tables-only"
+
+[profile.dev.package."*"]
+debug = false
+
 [profile.release]
 codegen-units = 1
 lto = true

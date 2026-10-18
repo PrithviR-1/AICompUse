@@ -77,3 +77,8 @@ Judgment calls made while building, each with context, decision and consequence 
 - **Context:** §1.3 asks for optional direct adapters (Anthropic, OpenAI, Gemini, DeepSeek, any OpenAI-compatible endpoint) behind the same trait. All of them offer an OpenAI-compatible `/chat/completions`.
 - **Decision:** one `OpenAiCompatible` adapter serves every provider, configured by `ProviderId` (base URL, env var, key-check path, extra headers): OpenAI `api.openai.com/v1`, Anthropic `api.anthropic.com/v1` (OpenAI SDK compatibility layer, plus `x-api-key`/`anthropic-version` headers for `/models`), Gemini `generativelanguage.googleapis.com/v1beta/openai`, DeepSeek `api.deepseek.com/v1`, OpenRouter `openrouter.ai/api/v1` (key verified with `GET /key`, because its `/models` is public). Direct-provider models are listed from their live `/models` with unknown metadata unless seeded.
 - **Consequence:** no provider-specific protocol code. Features only available in native APIs (e.g. Anthropic prompt caching) wait for a native adapter behind the same trait. Direct providers were not tested live (no keys supplied); fixtures cover the request shape.
+
+## D14 — Smaller debug builds (disk space)
+- **Context:** with 12 GiB free at the start (B1), the debug `target/` reached 6.6 GB and the disk fell to 1.3 GiB free.
+- **Decision:** `[profile.dev] debug = "line-tables-only"` with `debug = false` for all dependencies, and the Tauri lib crate builds only `rlib` (the `staticlib`/`cdylib` crate types from the template exist for iOS/Android, which Machi doesn't target).
+- **Consequence:** `target/` is ≈ 1.4 GB; backtraces in dependencies lose line info in debug builds. Mobile targets would need the crate types back.

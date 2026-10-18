@@ -53,6 +53,18 @@
   --color-danger-soft: var(--danger-soft);
   --color-success: var(--success);
   --color-avatar-text: var(--avatar-text);
+  --color-avatar-1: var(--avatar-1);
+  --color-avatar-2: var(--avatar-2);
+  --color-avatar-3: var(--avatar-3);
+  --color-avatar-4: var(--avatar-4);
+  --color-avatar-5: var(--avatar-5);
+  --color-avatar-6: var(--avatar-6);
+  --color-avatar-7: var(--avatar-7);
+  --color-avatar-8: var(--avatar-8);
+  --color-avatar-9: var(--avatar-9);
+  --color-avatar-10: var(--avatar-10);
+  --color-avatar-11: var(--avatar-11);
+  --color-avatar-12: var(--avatar-12);
   --color-transparent: transparent;
   --color-current: currentColor;
 
@@ -96,6 +108,28 @@
   --animate-slide-in: slide-in var(--duration-slow) var(--motion-ease);
 }
 
+/* Icon sizes (§15.10): 16 inline, 18 toolbars, 22 rail; 12 for tiny glyphs. */
+@utility icon-xs {
+  width: 0.75rem;
+  height: 0.75rem;
+  flex-shrink: 0;
+}
+@utility icon-sm {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+@utility icon-md {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+}
+@utility icon-lg {
+  width: 1.375rem;
+  height: 1.375rem;
+  flex-shrink: 0;
+}
+
 @keyframes pulse-dot {
   0%, 100% { opacity: 0.35; transform: scale(0.85); }
   50% { opacity: 1; transform: scale(1); }
@@ -119,6 +153,33 @@
 @keyframes slide-in {
   from { opacity: 0; transform: translateX(-12px); }
   to { opacity: 1; transform: none; }
+}
+
+/* Settings → Appearance → Font size scales every rem-based token. */
+:root[data-font-size="small"] {
+  font-size: 93.75%;
+}
+:root[data-font-size="large"] {
+  font-size: 112.5%;
+}
+
+/* Shiki "css-variables" theme mapped onto the code tokens. */
+:root,
+[data-theme] {
+  --shiki-foreground: var(--code-fg);
+  --shiki-background: transparent;
+  --shiki-token-constant: var(--code-constant);
+  --shiki-token-string: var(--code-string);
+  --shiki-token-string-expression: var(--code-string);
+  --shiki-token-comment: var(--code-comment);
+  --shiki-token-keyword: var(--code-keyword);
+  --shiki-token-parameter: var(--code-parameter);
+  --shiki-token-function: var(--code-function);
+  --shiki-token-punctuation: var(--code-punctuation);
+  --shiki-token-link: var(--code-link);
+  --shiki-token-inserted: var(--code-string);
+  --shiki-token-deleted: var(--code-constant);
+  --shiki-token-changed: var(--code-number);
 }
 
 @layer base {
