@@ -8,6 +8,12 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
+    "typecheck": "tsc -b",
+    "lint": "eslint . && node scripts/check-ui.mjs && node scripts/check-deps.mjs && node scripts/check-exports.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "e2e": "playwright test",
+    "bindings": "cargo run -q -p machi --example export_bindings",
     "tauri": "tauri"
   },
   "dependencies": {

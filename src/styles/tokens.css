@@ -34,18 +34,15 @@
   /* The single accent (§15.0 item 5) and its derived tints */
   --accent: #7c7cf2;
   --accent-strong: #6366f1;
-  --accent-fill: #6366f1;
-  --accent-fill-hover: #7373f4;
+  --accent-fill: #5e5ff0;
+  --accent-fill-hover: #5555e0;
   --accent-contrast: #ffffff;
-  --accent-soft: color-mix(in srgb, var(--accent) 16%, transparent);
-  --accent-ring: color-mix(in srgb, var(--accent) 60%, transparent);
 
   /* Status */
   --danger: #ef4444;
   --danger-text: #f87171;
   --danger-contrast: #ffffff;
   --danger-strong: #dc2626;
-  --danger-soft: color-mix(in srgb, var(--danger) 10%, transparent);
   --success: #22c55e;
 
   /* Elevation (popovers, menus and dialogs only) */
@@ -120,6 +117,17 @@
   --code-parameter: #27272a;
   --code-punctuation: #62626b;
   --code-link: #4b4bd6;
+}
+
+/*
+ * Tints derived from the theme colors. Declared on every themed scope so nested
+ * [data-theme] containers (the gallery) recompute them from their own palette.
+ */
+:root,
+[data-theme] {
+  --accent-soft: color-mix(in srgb, var(--accent) 16%, transparent);
+  --accent-ring: color-mix(in srgb, var(--accent) 60%, transparent);
+  --danger-soft: color-mix(in srgb, var(--danger) 10%, transparent);
 }
 
 :root {
