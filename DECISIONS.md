@@ -87,3 +87,8 @@ Judgment calls made while building, each with context, decision and consequence 
 - **Context:** §15.0 item 5 limits the accent to selected states, links, the Send button and "See all"; item 9 says the selected item gets an "accent-tinted" treatment, while §15.5 specifies `--surface-active` for the selected chip; §15.3 specifies the accent for the Machi mark and the profile circle.
 - **Decision:** primary buttons use a strong neutral fill (`--text` on `--bg`) instead of the accent. Send, links, "See all", focus rings (required by §15.11), switches and sliders in their on state, the Machi mark and the profile circle keep the accent. Selected chips, tabs and rail items use `--surface-active` as §15.5 and §15.3 specify.
 - **Consequence:** the accent marks only the primary send action, links and selection, so it stays meaningful; primary buttons are still the highest-contrast control in their card.
+
+## D16 — Local release bundles: the .app; DMG left to CI
+- **Context:** `pnpm tauri build` compiled the release and produced `Machi.app`, but the DMG step's AppleScript (Finder window layout) failed with "AppleEvent timed out (-1712)": the terminal needs Automation permission to control Finder, which is a GUI approval that can't be granted from here.
+- **Decision:** keep `bundle.targets: "all"` (CI's macOS runner has a GUI session, so the DMG is built there) and use `pnpm tauri build --bundles app` locally. The exit criterion ("produces a working app on the development machine") is met by the `.app`.
+- **Consequence:** a local DMG needs either the Automation permission (System Settings → Privacy & Security → Automation → allow the terminal to control Finder) or CI. The app is unsigned; signing and notarization are out of Phase 0 scope.

@@ -21,3 +21,7 @@ Things only the user can provide or do. HARD blockers stop the build; SOFT block
 ## B4 — SOFT — Clicking through the desktop app
 - **What:** the UI flows are verified in Chromium against the mock backend (28 Playwright tests) and the backend flows live against Mixroute (`cargo run --example live_chat`), but nobody has clicked through the packaged macOS app itself (WebDriver for Tauri isn't available on macOS).
 - **What to do:** open `target/release/bundle/macos/Machi.app` and try a chat, stop, compare, an image on GPT-4.1, rename/pin/delete in the Chats panel, and export (the file lands in Downloads).
+
+## B5 — SOFT — Local DMG packaging
+- **What:** the DMG step of `pnpm tauri build` needs the terminal to control Finder (Automation permission); it timed out here. `Machi.app` itself builds fine (`pnpm tauri build --bundles app`).
+- **What to do (optional):** allow your terminal under System Settings → Privacy & Security → Automation → Finder, then run `pnpm tauri build`; or take the DMG from CI once B2 is resolved.

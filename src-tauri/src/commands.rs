@@ -56,7 +56,9 @@ pub fn platform_info() -> PlatformInfo {
 #[tauri::command]
 #[specta::specta]
 pub fn bootstrap(core: State<'_, MachiCore>) -> CmdResult<Bootstrap> {
-    core.bootstrap().map_err(err)
+    let boot = core.bootstrap().map_err(err)?;
+    tracing::info!(has_required_key = boot.has_required_key, "ui connected");
+    Ok(boot)
 }
 
 #[tauri::command]
