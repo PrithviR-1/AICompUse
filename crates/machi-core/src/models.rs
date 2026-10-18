@@ -466,7 +466,9 @@ mod tests {
         assert!(models.iter().any(|m| m.id == "glm-4-flash"));
         assert!(!models.iter().any(|m| m.id == "gemini-2.5-flash-image"));
         // Ranked models come first, in rank order.
-        assert_eq!(models[0].id, "gpt-5");
+        let ranks: Vec<u32> = models.iter().filter_map(|m| m.rank).collect();
+        assert!(ranks.windows(2).all(|w| w[0] <= w[1]));
+        assert_eq!(models[0].rank, Some(1));
     }
 
     #[test]
