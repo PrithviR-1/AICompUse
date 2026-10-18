@@ -40,7 +40,7 @@ source "$HOME/.cargo/env" 2>/dev/null; export NVM_DIR="$HOME/.nvm"; [ -s "$NVM_D
 - [x] 2.1 `secrets`: keychain storage behind a trait + debug-only `.env` fallback, tests
 
 ### 3. Store
-- [ ] 3.1 `store`: SQLite schema + migrations (conversations, message tree, attachments, settings, model cache), tests
+- [x] 3.1 `store`: SQLite schema + migrations (conversations, message tree, attachments, settings, model cache), tests
 
 ### 4. Providers
 - [ ] 4.1 `config/models.toml` seeded (prices checked against the Mixroute catalogue; unknown → null) + loader
