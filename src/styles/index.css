@@ -254,6 +254,88 @@
   }
 }
 
+/* Rendered Markdown in replies (§11.5). Typography only; colors come from tokens. */
+@layer components {
+  .markdown > :first-child {
+    margin-top: 0;
+  }
+  .markdown > * + * {
+    margin-top: 1rem;
+  }
+  .markdown h1,
+  .markdown h2,
+  .markdown h3,
+  .markdown h4 {
+    font-weight: 600;
+    line-height: 1.4;
+    margin-top: 1.5rem;
+  }
+  .markdown h1 {
+    font-size: var(--font-size-heading);
+  }
+  .markdown h2 {
+    font-size: var(--font-size-title);
+  }
+  .markdown h3,
+  .markdown h4 {
+    font-size: var(--font-size-body);
+  }
+  .markdown ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+  }
+  .markdown ol {
+    list-style: decimal;
+    padding-left: 1.5rem;
+  }
+  .markdown li + li,
+  .markdown li > ul,
+  .markdown li > ol {
+    margin-top: 0.25rem;
+  }
+  .markdown li::marker {
+    color: var(--text-faint);
+  }
+  .markdown blockquote {
+    border-left: 2px solid var(--border-strong);
+    padding-left: 1rem;
+    color: var(--text-muted);
+  }
+  .markdown hr {
+    border: 0;
+    border-top: 1px solid var(--border);
+  }
+  .markdown strong {
+    font-weight: 600;
+  }
+  .markdown :not(pre) > code {
+    font-family: var(--font-code);
+    font-size: 0.875em;
+    background: var(--surface-active);
+    border-radius: var(--shape-control);
+    padding: 0.125rem 0.25rem;
+  }
+  .markdown .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  /* Soft pulsing dot after the last block while a reply streams (§15.6). */
+  .markdown.is-streaming > :last-child::after {
+    content: "";
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-left: 0.25rem;
+    border-radius: 9999px;
+    background: var(--text-muted);
+    vertical-align: middle;
+    animation: pulse-dot 1.2s ease-in-out infinite;
+  }
+  .code-scroll pre {
+    background: transparent !important;
+  }
+}
+
 /* Motion: keep only opacity changes when the user asks for reduced motion (§15.10). */
 @media (prefers-reduced-motion: reduce) {
   *,

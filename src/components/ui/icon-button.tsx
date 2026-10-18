@@ -28,7 +28,7 @@ const iconButtonVariants = cva(
   },
 );
 
-export interface IconButtonProps
+interface IconButtonProps
   extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children">,
     VariantProps<typeof iconButtonVariants> {
   /** Accessible name and tooltip text. */

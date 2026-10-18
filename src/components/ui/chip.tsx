@@ -4,7 +4,7 @@ import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { disabledStyle, focusRing, transition } from "./styles";
 
-export interface ChipProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ChipProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   selected?: boolean;
   leading?: ReactNode;
   size?: "md" | "lg";

@@ -24,7 +24,7 @@ const SIZE_CLASSES = {
   lg: "size-24 text-page",
 } as const;
 
-export type AvatarSize = keyof typeof SIZE_CLASSES;
+type AvatarSize = keyof typeof SIZE_CLASSES;
 
 interface ModelAvatarProps {
   name: string;

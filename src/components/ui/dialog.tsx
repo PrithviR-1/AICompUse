@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 import { Button } from "./button";
 
 export const Dialog = RadixDialog.Root;
-export const DialogTrigger = RadixDialog.Trigger;
 
 interface DialogContentProps {
   title: string;

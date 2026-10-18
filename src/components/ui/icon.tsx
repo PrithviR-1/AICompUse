@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 const SIZES = { xs: "icon-xs", sm: "icon-sm", md: "icon-md", lg: "icon-lg" } as const;
 
-export type IconSize = keyof typeof SIZES;
+type IconSize = keyof typeof SIZES;
 
 interface IconProps extends Omit<LucideProps, "size" | "ref"> {
   icon: LucideIcon;

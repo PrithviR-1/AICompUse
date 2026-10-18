@@ -2,7 +2,7 @@
 // Routes: #/ (new chat), #/chat/:id, #/models, #/settings/:section, #/gallery (dev only).
 import { useSyncExternalStore } from "react";
 
-export const SETTINGS_SECTIONS = ["providers", "models", "appearance", "data", "about"] as const;
+const SETTINGS_SECTIONS = ["providers", "models", "appearance", "data", "about"] as const;
 export type SettingsSection = (typeof SETTINGS_SECTIONS)[number];
 
 export type Route =

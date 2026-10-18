@@ -16,7 +16,9 @@ function walk(dir, out = []) {
   return out;
 }
 
-const files = walk(SRC).map((full) => ({ rel: relative(ROOT, full), source: readFileSync(full, "utf8") }));
+// Template literals (e.g. sample Markdown containing code) must not count as declarations.
+const stripTemplates = (text) => text.replace(/`(?:\\[\s\S]|[^\\`])*`/g, "``");
+const files = walk(SRC).map((full) => ({ rel: relative(ROOT, full), source: stripTemplates(readFileSync(full, "utf8")) }));
 const declRe = /^export\s+(?:declare\s+)?(?:default\s+)?(?:async\s+)?(?:function\*?|const|let|class|type|interface|enum)\s+([A-Za-z0-9_$]+)/gm;
 const listRe = /^export\s+(?:type\s+)?\{([^}]+)\}(?!\s*from)/gm;
 

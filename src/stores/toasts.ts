@@ -1,7 +1,7 @@
 // Toast queue: short confirmations that auto-dismiss after 3 s (§15.11).
 import { create } from "zustand";
 
-export type ToastTone = "neutral" | "success" | "danger";
+type ToastTone = "neutral" | "success" | "danger";
 
 export interface ToastItem {
   id: number;
@@ -16,7 +16,7 @@ interface ToastState {
   dismiss: (id: number) => void;
 }
 
-export const TOAST_DURATION_MS = 3000;
+const TOAST_DURATION_MS = 3000;
 let nextId = 1;
 
 export const useToasts = create<ToastState>((set, get) => ({

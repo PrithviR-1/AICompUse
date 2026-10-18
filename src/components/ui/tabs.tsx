@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 import { focusRing, transition } from "./styles";
 
 export const Tabs = RadixTabs.Root;
-export const TabsContent = RadixTabs.Content;
 
 export const TabsList = forwardRef<ElementRef<typeof RadixTabs.List>, ComponentPropsWithoutRef<typeof RadixTabs.List>>(
   function TabsList({ className, ...props }, ref) {

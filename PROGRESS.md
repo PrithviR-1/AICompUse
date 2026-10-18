@@ -53,16 +53,16 @@ source "$HOME/.cargo/env" 2>/dev/null; export NVM_DIR="$HOME/.nvm"; [ -s "$NVM_D
 ### 5. UI (design system first, §15.12)
 - [x] 5.1 Tokens (§15.10) + primitives: Button, IconButton+tooltip, Input, Textarea, Chip, Avatar, Badge, Card, Popover, Menu, Dialog, Toast, Skeleton, Tooltip, Tabs
 - [x] 5.2 Dev-only `/gallery` route: every primitive × every state × both themes
-- [ ] 5.3 `machiClient` (Tauri backend + mock backend) and Zustand stores
-- [ ] 5.4 Shell: icon rail, chats flyout, hash router, keyboard shortcuts, toasts
-- [ ] 5.5 Composer (§15.7) incl. attachments, "@" mention, sliders popover
-- [ ] 5.6 Home screen (§15.5) incl. first-run key card
-- [ ] 5.7 Chat view (§15.6): header, messages, markdown/code/table/math, actions, streaming, scroll, errors, branches, edit
-- [ ] 5.8 Model picker (cmdk, §11.4) + Ctrl/Cmd+K
-- [ ] 5.9 Compare mode (§11.7)
-- [ ] 5.10 Models page (§15.8)
-- [ ] 5.11 Settings page (§15.11 two-column: Providers, Models, Appearance, Data, About + shortcuts)
-- [ ] 5.12 Global search palette (Ctrl/Cmd+Shift+F)
+- [x] 5.3 `machiClient` (Tauri backend + mock backend) and Zustand stores
+- [x] 5.4 Shell: icon rail, chats flyout, hash router, keyboard shortcuts, toasts
+- [x] 5.5 Composer (§15.7) incl. attachments, "@" mention, sliders popover
+- [x] 5.6 Home screen (§15.5) incl. first-run key card
+- [x] 5.7 Chat view (§15.6): header, messages, markdown/code/table/math, actions, streaming, scroll, errors, branches, edit
+- [x] 5.8 Model picker (cmdk, §11.4) + Ctrl/Cmd+K
+- [x] 5.9 Compare mode (§11.7)
+- [x] 5.10 Models page (§15.8)
+- [x] 5.11 Settings page (§15.11 two-column: Providers, Models, Appearance, Data, About + shortcuts)
+- [x] 5.12 Global search palette (Ctrl/Cmd+Shift+F)
 
 ### 6. Hardening
 - [ ] 6.1 Error states (rate limit inline + switch model), export, delete-all data

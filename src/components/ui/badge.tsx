@@ -15,7 +15,7 @@ const badgeVariants = cva("inline-flex h-5 items-center gap-1 rounded-full px-2 
   defaultVariants: { variant: "neutral" },
 });
 
-export interface BadgeProps extends HTMLAttributes<HTMLSpanElement>, VariantProps<typeof badgeVariants> {}
+interface BadgeProps extends HTMLAttributes<HTMLSpanElement>, VariantProps<typeof badgeVariants> {}
 
 export function Badge({ className, variant, ...props }: BadgeProps) {
   return <span className={cn(badgeVariants({ variant }), className)} {...props} />;

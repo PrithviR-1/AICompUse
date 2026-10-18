@@ -2,7 +2,7 @@
 // every model of one vendor shares a color. No logos are bundled or fetched.
 
 /** Number of avatar colors defined in tokens.css (--avatar-1 … --avatar-12). */
-export const AVATAR_COLORS = 12;
+const AVATAR_COLORS = 12;
 
 /** FNV-1a over UTF-16 code units: stable across sessions and platforms. */
 function hash(text: string): number {
