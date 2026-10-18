@@ -51,8 +51,8 @@ source "$HOME/.cargo/env" 2>/dev/null; export NVM_DIR="$HOME/.nvm"; [ -s "$NVM_D
 - [x] 4.6 Tauri commands + events wired, bindings regenerated
 
 ### 5. UI (design system first, §15.12)
-- [ ] 5.1 Tokens (§15.10) + primitives: Button, IconButton+tooltip, Input, Textarea, Chip, Avatar, Badge, Card, Popover, Menu, Dialog, Toast, Skeleton, Tooltip, Tabs
-- [ ] 5.2 Dev-only `/gallery` route: every primitive × every state × both themes
+- [x] 5.1 Tokens (§15.10) + primitives: Button, IconButton+tooltip, Input, Textarea, Chip, Avatar, Badge, Card, Popover, Menu, Dialog, Toast, Skeleton, Tooltip, Tabs
+- [x] 5.2 Dev-only `/gallery` route: every primitive × every state × both themes
 - [ ] 5.3 `machiClient` (Tauri backend + mock backend) and Zustand stores
 - [ ] 5.4 Shell: icon rail, chats flyout, hash router, keyboard shortcuts, toasts
 - [ ] 5.5 Composer (§15.7) incl. attachments, "@" mention, sliders popover

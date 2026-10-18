@@ -46,9 +46,11 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
+const GRID_COLS: Record<number, string> = { 4: "grid-cols-4", 5: "grid-cols-5", 6: "grid-cols-6" };
+
 function StateGrid({ render, states = STATES }: { render: (state: State) => ReactNode; states?: readonly State[] }) {
   return (
-    <div className="grid grid-cols-6 items-center gap-3">
+    <div className={`grid items-center gap-3 ${GRID_COLS[states.length] ?? "grid-cols-6"}`}>
       {states.map((s) => (
         <span key={`${s}-label`} className="text-caption text-faint">
           {s}
@@ -64,17 +66,22 @@ function StateGrid({ render, states = STATES }: { render: (state: State) => Reac
 }
 
 /** A box that contains fixed-position overlays so they render inside the themed panel. */
-function OverlayStage({ children, height }: { children: ReactNode; height: string }) {
+function OverlayStage({ children, height }: { children: (stage: HTMLElement) => ReactNode; height: string }) {
+  const [stage, setStage] = useState<HTMLDivElement | null>(null);
   return (
-    <div className={`relative overflow-hidden rounded-menu border border-dashed border-border [transform:translateZ(0)] ${height}`}>{children}</div>
+    <div
+      ref={setStage}
+      className={`relative overflow-hidden rounded-menu border border-dashed border-border [transform:translateZ(0)] ${height}`}
+    >
+      {stage && children(stage)}
+    </div>
   );
 }
 
 function ThemePanel({ theme }: { theme: "dark" | "light" }) {
-  const [panel, setPanel] = useState<HTMLDivElement | null>(null);
   const [checked, setChecked] = useState(true);
   return (
-    <div ref={setPanel} data-theme={theme} className="flex min-w-0 flex-1 flex-col gap-12 rounded-dialog border border-border bg-bg p-8">
+    <div data-theme={theme} className="flex min-w-0 flex-1 flex-col gap-12 rounded-dialog border border-border bg-bg p-8">
       <h1 className="text-heading font-bold">{theme === "dark" ? "Dark" : "Light"} theme</h1>
 
       <Section title="Button — primary, secondary, ghost, danger, link">
@@ -241,9 +248,9 @@ function ThemePanel({ theme }: { theme: "dark" | "light" }) {
 
       <Section title="Tooltip, Popover and Menu (open)">
         <OverlayStage height="h-72">
-          {panel && (
+          {(stage) => (
             <div className="flex h-full items-start gap-24 p-6">
-              <Tooltip content="New chat" side="right" forceOpen>
+              <Tooltip content="New chat" side="right" forceOpen container={stage}>
                 <span className="inline-flex">
                   <IconButton label="New chat" showTooltip={false} icon={i(Plus)} />
                 </span>
@@ -252,7 +259,7 @@ function ThemePanel({ theme }: { theme: "dark" | "light" }) {
                 <PopoverTrigger asChild>
                   <Button size="sm">Settings</Button>
                 </PopoverTrigger>
-                <PopoverContent container={panel} className="w-56 p-4" onOpenAutoFocus={(e) => e.preventDefault()}>
+                <PopoverContent container={stage} className="w-56 p-4" onOpenAutoFocus={(e) => e.preventDefault()}>
                   <p className="text-label font-medium">Temperature</p>
                   <p className="mt-1 text-meta text-muted">Higher is more creative.</p>
                 </PopoverContent>
@@ -263,7 +270,7 @@ function ThemePanel({ theme }: { theme: "dark" | "light" }) {
                     More
                   </Button>
                 </MenuTrigger>
-                <MenuContent container={panel} align="start" onCloseAutoFocus={(e) => e.preventDefault()}>
+                <MenuContent container={stage} align="start" onCloseAutoFocus={(e) => e.preventDefault()}>
                   <MenuLabel>Chat</MenuLabel>
                   <MenuItem icon={<Icon icon={Pencil} size="sm" />}>Rename</MenuItem>
                   <MenuItem icon={<Icon icon={Pin} size="sm" />}>Pin</MenuItem>
@@ -283,9 +290,10 @@ function ThemePanel({ theme }: { theme: "dark" | "light" }) {
 
       <Section title="Dialog (open, destructive action on the right)">
         <OverlayStage height="h-64">
-          {panel && (
+          {(stage) => (
             <Dialog open modal={false}>
               <DialogContent
+                container={stage}
                 title="Delete this chat?"
                 description="The chat and all of its replies are removed from this device. This can't be undone."
                 footer={

@@ -12,14 +12,16 @@ interface TooltipProps {
   /** Render the bubble open (gallery only). */
   forceOpen?: boolean;
   disabled?: boolean;
+  /** Portal target (gallery panels render tooltips inside their theme scope). */
+  container?: HTMLElement | null;
 }
 
-export function Tooltip({ content, children, side = "top", forceOpen, disabled }: TooltipProps) {
+export function Tooltip({ content, children, side = "top", forceOpen, disabled, container }: TooltipProps) {
   if (disabled) return <>{children}</>;
   return (
     <RadixTooltip.Root delayDuration={400} open={forceOpen}>
       <RadixTooltip.Trigger asChild>{children}</RadixTooltip.Trigger>
-      <RadixTooltip.Portal>
+      <RadixTooltip.Portal container={container ?? undefined}>
         <RadixTooltip.Content
           side={side}
           sideOffset={8}
