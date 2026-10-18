@@ -95,6 +95,11 @@ let idCounter = 0;
 const newId = () => `m${Date.now().toString(36)}${(idCounter++).toString(36)}`;
 
 function sleep(ms: number, signal?: AbortSignal): Promise<void> {
+  // A zero delay yields through a microtask: timers have ~15 ms resolution on Windows, which
+  // made a fully "instant" mock stream take seconds there.
+  if (ms <= 0) {
+    return signal?.aborted ? Promise.reject(new DOMException("aborted", "AbortError")) : Promise.resolve();
+  }
   return new Promise((resolve, reject) => {
     if (signal?.aborted) return reject(new DOMException("aborted", "AbortError"));
     const t = setTimeout(resolve, ms);

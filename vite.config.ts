@@ -38,5 +38,7 @@ export default defineConfig({
     setupFiles: ["./src/test/setup.ts"],
     include: ["src/**/*.test.{ts,tsx}"],
     css: false,
+    // CI runners (Windows especially) are slower than a dev machine.
+    testTimeout: 15_000,
   },
 });
