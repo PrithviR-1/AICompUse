@@ -9,6 +9,10 @@
 # `gemini-3-5-flash-lite` is the API ID `gemini-3.5-flash-lite`). A price that could not be
 # confirmed there is omitted and shown as "Price unknown" — never guessed.
 # Context windows: Mixroute docs where listed, otherwise the vendor's documentation.
+# Capabilities are what works THROUGH Mixroute, verified by `cargo run --example smoke`
+# and direct probes on 2026-10-18 (see DECISIONS.md D12): image parts are silently dropped
+# for the OpenAI mini/nano models, and strict json_schema fails for every OpenAI model
+# (the gateway strips `additionalProperties`), so those flags are false here.
 # `free = true` only for models confirmed zero-priced AND present in GET /models.
 # `rank`: lower = shown earlier in the home Models row (most capable and popular first).
 
@@ -19,8 +23,8 @@ title_model = "mixroute:gpt-4.1-nano"
 # Agent model tiers (§6), used from Phase A. T0 is deterministic replay (no model).
 [tiers]
 t1 = ["mixroute:gpt-4.1-nano", "mixroute:gpt-5-nano"]
-t2 = ["mixroute:gpt-4.1-mini", "mixroute:gemini-2.5-flash", "mixroute:gpt-5-mini"]
-t3 = ["mixroute:gpt-5", "mixroute:gpt-4.1"]
+t2 = ["mixroute:gpt-4.1-mini", "mixroute:gemini-3.5-flash-lite"]
+t3 = ["mixroute:gpt-4.1", "mixroute:gemini-2.5-flash"]
 
 # --- OpenAI ---------------------------------------------------------------------------
 
@@ -31,11 +35,11 @@ vendor = "OpenAI"
 context = 400000
 input_price = 1.25
 output_price = 10.00
-vision = true
+vision = false
 tools = true
-structured_output = true
+structured_output = false
 reasoning = true
-rank = 1
+rank = 20
 
 [[models]]
 id = "gpt-5-mini"
@@ -44,11 +48,11 @@ vendor = "OpenAI"
 context = 400000
 input_price = 0.25
 output_price = 2.00
-vision = true
+vision = false
 tools = true
-structured_output = true
+structured_output = false
 reasoning = true
-rank = 6
+rank = 21
 
 [[models]]
 id = "gpt-5-nano"
@@ -57,9 +61,9 @@ vendor = "OpenAI"
 context = 400000
 input_price = 0.05
 output_price = 0.40
-vision = true
+vision = false
 tools = true
-structured_output = true
+structured_output = false
 reasoning = true
 rank = 13
 
@@ -70,17 +74,17 @@ vendor = "OpenAI"
 context = 1047576
 vision = true
 tools = true
-structured_output = true
-rank = 3
+structured_output = false
+rank = 1
 
 [[models]]
 id = "gpt-4.1-mini"
 name = "GPT-4.1 mini"
 vendor = "OpenAI"
 context = 1047576
-vision = true
+vision = false
 tools = true
-structured_output = true
+structured_output = false
 rank = 10
 
 [[models]]
@@ -88,9 +92,9 @@ id = "gpt-4.1-nano"
 name = "GPT-4.1 nano"
 vendor = "OpenAI"
 context = 1047576
-vision = true
+vision = false
 tools = true
-structured_output = true
+structured_output = false
 rank = 12
 
 [[models]]
@@ -100,7 +104,7 @@ vendor = "OpenAI"
 context = 128000
 vision = true
 tools = true
-structured_output = true
+structured_output = false
 rank = 11
 
 [[models]]
@@ -110,7 +114,7 @@ vendor = "OpenAI"
 context = 128000
 vision = true
 tools = true
-structured_output = true
+structured_output = false
 rank = 14
 
 [[models]]
@@ -120,7 +124,7 @@ vendor = "OpenAI"
 context = 128000
 vision = true
 tools = true
-structured_output = true
+structured_output = false
 rank = 15
 
 # --- Google ---------------------------------------------------------------------------
