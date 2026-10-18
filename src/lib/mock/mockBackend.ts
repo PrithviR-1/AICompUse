@@ -257,10 +257,24 @@ export function createMockBackend(config: MockConfig = {}): MachiBackend {
       let outcome: "complete" | "stopped" | "error" = "complete";
       try {
         await sleep(firstTokenDelay, controller.signal);
-        for (const piece of chunks(answer)) {
-          content += piece;
-          onEvent({ type: "delta", conversationId: message.conversationId, messageId: message.id, text: piece });
-          await sleep(streamDelay, controller.signal);
+        // Batch like the Rust core: at most one delta event per 40 ms.
+        let pending = "";
+        let lastFlush = Date.now();
+        const flush = () => {
+          if (!pending) return;
+          onEvent({ type: "delta", conversationId: message.conversationId, messageId: message.id, text: pending });
+          pending = "";
+          lastFlush = Date.now();
+        };
+        try {
+          for (const piece of chunks(answer)) {
+            content += piece;
+            pending += piece;
+            if (Date.now() - lastFlush >= 40) flush();
+            await sleep(streamDelay, controller.signal);
+          }
+        } finally {
+          flush();
         }
         if (fails) outcome = "error";
       } catch {

@@ -11,6 +11,7 @@ import { setBackend } from "@/lib/machiClient";
 import { useApp } from "@/stores/app";
 import { useComposer } from "@/stores/composer";
 import { useModels } from "@/stores/models";
+import { splitBlocks } from "./chat/Markdown";
 import { MessageList } from "./chat/MessageList";
 import type { MessageHandlers } from "./chat/Messages";
 import { Composer } from "./composer/Composer";
@@ -56,7 +57,7 @@ describe("Composer", () => {
     expect(screen.getByRole("button", { name: "Send message" })).toBeDisabled();
     await user.type(textarea, "Hello there");
     await user.keyboard("{Enter}");
-    expect(onSend).toHaveBeenCalledWith({ content: "Hello there", attachments: [], modelKey: nano.key });
+    expect(onSend).toHaveBeenCalledWith({ content: "Hello there", attachments: [], modelKey: nano.key, baseModelKey: nano.key });
     await waitFor(() => expect(textarea).toHaveValue(""));
   });
 
@@ -95,8 +96,19 @@ describe("Composer", () => {
     const { onSend, textarea } = composer();
     expect(screen.getByText("for this message")).toBeInTheDocument();
     await user.type(textarea, "Hi{Enter}");
-    expect(onSend).toHaveBeenCalledWith(expect.objectContaining({ modelKey: vision.key }));
+    expect(onSend).toHaveBeenCalledWith(expect.objectContaining({ modelKey: vision.key, baseModelKey: nano.key }));
     await waitFor(() => expect(screen.queryByText("for this message")).toBeNull());
+  });
+});
+
+describe("Markdown blocks", () => {
+  it("splits at blank lines but keeps fenced code and math together", () => {
+    const md = "Intro\n\n```ts\nconst a = 1;\n\nconst b = 2;\n```\n\n$$\na\n\nb\n$$\n\n| a | b |\n| - | - |\n| 1 | 2 |";
+    const blocks = splitBlocks(md);
+    expect(blocks).toHaveLength(4);
+    expect(blocks[1]).toContain("const b = 2;");
+    expect(blocks[2].startsWith("$$")).toBe(true);
+    expect(blocks[3]).toContain("| 1 | 2 |");
   });
 });
 

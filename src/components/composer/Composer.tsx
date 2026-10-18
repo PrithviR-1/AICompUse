@@ -22,7 +22,10 @@ const EMPTY: NewAttachment[] = [];
 interface ComposerSendInput {
   content: string;
   attachments: NewAttachment[];
+  /** Model for this message ("@" override or the chat's model). */
   modelKey: string;
+  /** The chat's own model; the conversation continues with it after an "@" message. */
+  baseModelKey: string;
 }
 
 interface ComposerProps {
@@ -149,7 +152,7 @@ export function Composer({
   const submit = async () => {
     if (streaming || !canSend || !target) return;
     setSending(true);
-    const ok = await onSend({ content: text, attachments, modelKey: target.key });
+    const ok = await onSend({ content: text, attachments, modelKey: target.key, baseModelKey: model?.key ?? target.key });
     setSending(false);
     if (ok) clearDraft(draftKey);
     textareaRef.current?.focus();

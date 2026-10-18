@@ -6,6 +6,7 @@ import { setBackend } from "@/lib/machiClient";
 import { indexMessages, visiblePath } from "@/lib/tree";
 import { useApp } from "./app";
 import { useChats } from "./chats";
+import { useComposer } from "./composer";
 import { useConversation } from "./conversation";
 
 const NANO = "mixroute:gpt-4.1-nano";
@@ -81,6 +82,14 @@ describe("conversation store", () => {
     await until(idle);
     expect(visible()[0].content).toBe("Tell me a pun");
     expect(Object.values(useConversation.getState().messages)).toHaveLength(4);
+  });
+
+  it("an @ model applies to one message; the chat keeps its own model", async () => {
+    await useConversation.getState().send({ content: "Hi", attachments: [], modelKey: GEMINI, baseModelKey: NANO });
+    await until(idle);
+    const id = useConversation.getState().conversation?.id ?? "";
+    expect(visible()[1].modelKey).toBe(GEMINI);
+    expect(useComposer.getState().chatModels[id]).toBe(NANO);
   });
 
   it("keeps context when switching models mid-chat", async () => {

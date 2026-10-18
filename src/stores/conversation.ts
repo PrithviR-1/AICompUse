@@ -17,12 +17,15 @@ import { machi } from "@/lib/machiClient";
 import { navigate } from "@/lib/router";
 import { useApp } from "./app";
 import { useChats } from "./chats";
+import { useComposer } from "./composer";
 import { toast } from "./toasts";
 
 interface SendInput {
   content: string;
   attachments: NewAttachment[];
   modelKey: string;
+  /** The chat's own model when `modelKey` is a one-message "@" override (§15.7). */
+  baseModelKey?: string;
   /** New chats only. */
   compareModels?: string[] | null;
   settings?: ChatSettings | null;
@@ -59,20 +62,46 @@ interface ConversationState {
 const pendingDeltas = new Map<string, string>();
 const pendingFinished = new Map<string, Message>();
 
+/** Deltas waiting for the next animation frame, so a burst of tokens costs one render. */
+const queuedDeltas = new Map<string, { conversationId: string; text: string }>();
+let flushScheduled = false;
+
+const nextFrame = (fn: () => void) =>
+  typeof requestAnimationFrame === "function" ? requestAnimationFrame(fn) : setTimeout(fn, 16);
+
 export const useConversation = create<ConversationState>((set, get) => {
+  function flushDeltas() {
+    flushScheduled = false;
+    if (queuedDeltas.size === 0) return;
+    const state = get();
+    let messages: Record<string, Message> | null = null;
+    for (const [id, { conversationId, text }] of queuedDeltas) {
+      const message = (messages ?? state.messages)[id];
+      if (message && state.activeId === conversationId) {
+        messages ??= { ...state.messages };
+        messages[id] = { ...message, content: message.content + text };
+      } else if (!message) {
+        pendingDeltas.set(id, (pendingDeltas.get(id) ?? "") + text);
+      }
+    }
+    queuedDeltas.clear();
+    if (messages) set({ messages });
+  }
+
   function applyEvent(event: ChatEvent) {
     switch (event.type) {
       case "delta": {
-        const state = get();
-        const message = state.messages[event.messageId];
-        if (message && state.activeId === event.conversationId) {
-          set({ messages: { ...state.messages, [message.id]: { ...message, content: message.content + event.text } } });
-        } else if (!message) {
-          pendingDeltas.set(event.messageId, (pendingDeltas.get(event.messageId) ?? "") + event.text);
+        const queued = queuedDeltas.get(event.messageId);
+        queuedDeltas.set(event.messageId, { conversationId: event.conversationId, text: (queued?.text ?? "") + event.text });
+        if (!flushScheduled) {
+          flushScheduled = true;
+          nextFrame(flushDeltas);
         }
         break;
       }
       case "finished": {
+        // Apply any queued text first so ordering is preserved, then the final message wins.
+        flushDeltas();
         pendingDeltas.delete(event.message.id);
         const state = get();
         if (!state.messages[event.message.id]) {
@@ -183,6 +212,8 @@ export const useConversation = create<ConversationState>((set, get) => {
         set({ activeId: result.conversation.id, status: "ready", messages: {}, streaming: {} });
       }
       applyResult(result);
+      // Keep the chat on its own model; an "@" model applies to this message only.
+      useComposer.getState().setChatModel(result.conversation.id, input.baseModelKey ?? input.modelKey);
       if (!conversationId) navigate({ name: "chat", id: result.conversation.id });
       return true;
     },

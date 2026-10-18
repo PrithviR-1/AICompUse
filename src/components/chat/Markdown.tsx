@@ -1,6 +1,6 @@
 // Markdown for assistant replies (§11.5): GFM tables, code blocks, KaTeX math; links open in
 // the system browser.
-import { memo, type ComponentPropsWithoutRef } from "react";
+import { memo, useMemo, type ComponentPropsWithoutRef } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
@@ -53,6 +53,44 @@ function components(onLink: (url: string) => void): Components {
   };
 }
 
+/**
+ * Splits Markdown into top-level blocks at blank lines outside code fences and $$ math, so a
+ * streaming reply only re-parses its last block (finished blocks are memoized).
+ */
+export function splitBlocks(markdown: string): string[] {
+  const blocks: string[] = [];
+  let current: string[] = [];
+  let fence: string | null = null;
+  let math = false;
+  for (const line of markdown.split("\n")) {
+    const trimmed = line.trim();
+    const fenceMatch = /^(`{3,}|~{3,})/.exec(trimmed);
+    if (fence) {
+      if (fenceMatch && trimmed.startsWith(fence)) fence = null;
+    } else if (fenceMatch) {
+      fence = fenceMatch[1];
+    } else if (trimmed === "$$") {
+      math = !math;
+    }
+    if (!fence && !math && trimmed === "" && current.length > 0) {
+      blocks.push(current.join("\n"));
+      current = [];
+      continue;
+    }
+    if (trimmed !== "" || current.length > 0) current.push(line);
+  }
+  if (current.length > 0) blocks.push(current.join("\n"));
+  return blocks;
+}
+
+const MarkdownBlock = memo(function MarkdownBlock({ content, components: c }: { content: string; components: Components }) {
+  return (
+    <ReactMarkdown remarkPlugins={remarkPlugins} rehypePlugins={rehypePlugins} components={c}>
+      {content}
+    </ReactMarkdown>
+  );
+});
+
 interface MarkdownProps {
   content: string;
   onLink: (url: string) => void;
@@ -60,11 +98,13 @@ interface MarkdownProps {
 }
 
 export const Markdown = memo(function Markdown({ content, onLink, className }: MarkdownProps) {
+  const rendered = useMemo(() => components(onLink), [onLink]);
+  const blocks = useMemo(() => splitBlocks(content), [content]);
   return (
     <div className={cn("markdown text-body leading-(--line-height-message) text-fg", className)}>
-      <ReactMarkdown remarkPlugins={remarkPlugins} rehypePlugins={rehypePlugins} components={components(onLink)}>
-        {content}
-      </ReactMarkdown>
+      {blocks.map((block, i) => (
+        <MarkdownBlock key={i} content={block} components={rendered} />
+      ))}
     </div>
   );
 });
